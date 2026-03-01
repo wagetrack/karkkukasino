@@ -159,7 +159,7 @@
     background: linear-gradient(135deg, #22c55e, #0ea5e9); color: white; width: 100%; margin-top: 14px;
   }
   button.secondary {
-    padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: #111827; color: var(--text-main); cursor: pointer;
+    padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: #111827; color: #fff; cursor: pointer;
   }
   button.danger { background: #ef4444; color: white; border: none; }
   button:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -230,6 +230,7 @@
       <button data-tab="cashier" onclick="showTab('cashier')">Cashier</button>
       <button data-tab="sports" onclick="showTab('sports')">Sports</button>
       <button data-tab="blackjack" onclick="showTab('blackjack')">Blackjack</button>
+      <button data-tab="program" onclick="showTab('program')">Program</button>
       <button data-tab="history" onclick="showTab('history')">Bet History</button>
       <button data-tab="bonus" onclick="showTab('bonus')">Bonus Calculator</button>
     </nav>
@@ -240,7 +241,7 @@
     <!-- HOME -->
     <section id="tab_home" class="card">
       <h1>Welcome to KarkkuKasino 👋</h1>
-      <p>Use the <strong>Cashier</strong> to deposit or cash out, place sports bets, play <strong>Blackjack</strong>, track history, and monitor bonus wagering. Your data now <strong>persists</strong> across refresh.</p>
+      <p>Use the <strong>Cashier</strong> to deposit or cash out, place sports bets, play <strong>Blackjack</strong>, track history, and monitor bonus wagering. Your data <strong>persists</strong> across refresh.</p>
       <div class="grid-3">
         <div class="card">
           <h3>Go to Cashier</h3>
@@ -404,6 +405,99 @@
       </div>
     </section>
 
+    <!-- PROGRAM -->
+    <section id="tab_program" class="card" style="display:none;">
+      <h2>Program</h2>
+      <p>Full weekend schedule as separate blocks.</p>
+
+      <!-- Friday -->
+      <div class="card">
+        <h3>Perjantai 6.3.</h3>
+        <div class="list">
+          <div class="stat-row"><strong>16.00</strong> Ilmoittautuminen ja majoittuminen</div>
+          <div class="stat-row"><strong>17.00–18.00</strong> Päivällinen</div>
+          <div class="stat-row">
+            <strong>18.15</strong> Isolla vaiheella valoa kohti<br>
+            <span class="mini">Yhteiset avajaiset: houseband, festariväki, juontajat.</span>
+          </div>
+          <div class="stat-row">
+            <strong>19.15</strong> Tuutin täydeltä hyviä uutisia<br>
+            <span class="mini">Nuoren puheenvuoro: Elisa Suopajärvi. Raamattuopetus 1: Jumalan järjestämä pelastusvene – Antti Koskenniemi.</span>
+          </div>
+          <div class="stat-row"><strong>20.30–21.00</strong> Iltapala</div>
+          <div class="stat-row">
+            <strong>21.15</strong> Ihmeitä ja tähtiä: who is Amos!<br>
+            <span class="mini">Perjantai-illan festarileirihuumaa: räppitähti Amos.</span>
+          </div>
+          <div class="stat-row">
+            <strong>22.30</strong> Hän on uskollinen Jumala<br>
+            <span class="mini">Iltamessu: Johan Helkkula ja Markus Malmivaara, musiikissa Riina Halme.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saturday -->
+      <div class="card">
+        <h3>Lauantai 7.3.</h3>
+        <div class="list">
+          <div class="stat-row"><strong>8.00</strong> Aamupala</div>
+          <div class="stat-row">
+            <strong>9.00</strong> Valot pimeyksien reunalla<br>
+            <span class="mini">Aamunhartaus: Milka Ikäläinen. Nuoren puheenvuoro: Emma Palola. Raamattuopetus 2: Päivi Niemi.</span>
+          </div>
+          <div class="stat-row"><strong>10.45</strong> Workshopit</div>
+          <div class="stat-row"><strong>11.30–12.30</strong> Lounas</div>
+          <div class="stat-row">
+            <strong>12.45</strong> Keskipäivän kotibileet<br>
+            <span class="mini">Musiikki: Pro Fide. Raamattuopetus 3: Tiina Karlsson.</span>
+          </div>
+          <div class="stat-row"><strong>14.00</strong> Kahvit ja mehut</div>
+          <div class="stat-row"><strong>14.30</strong> Studioinfot</div>
+          <div class="stat-row"><strong>14.40</strong> Studiot</div>
+          <div class="stat-row"><strong>16.00</strong> Ihan pihalla -superspesiaali</div>
+          <div class="stat-row"><strong>17.00–18.00</strong> Päivällinen</div>
+          <div class="stat-row">
+            <strong>18.00</strong> Open stage<br>
+            <span class="mini">Avoin lava erilaisille ja erityisille esiintyjille.</span>
+          </div>
+          <div class="stat-row">
+            <strong>19.30</strong> Tarinoita tulipunaisesta taivaanrannasta<br>
+            <span class="mini">Iltagaala, festaridokkari, sketsit, workshop-sato. Nuoren puheenvuoro: Veikko Pulakka. Raamattuopetus 4: Juha Heinonen.</span>
+          </div>
+          <div class="stat-row"><strong>20.30</strong> Iltapala</div>
+          <div class="stat-row">
+            <strong>21.30</strong> Kuinka paljon voi kestää<br>
+            <span class="mini">Kotipalaajat & stand-up: Teemu Kalliota.</span>
+          </div>
+          <div class="stat-row">
+            <strong>23.00</strong> Minä olen sinun kanssasi<br>
+            <span class="mini">Iltahartaus: Minttu Gummerus ja houseband.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sunday -->
+      <div class="card">
+        <h3>Sunnuntai 8.3.</h3>
+        <div class="list">
+          <div class="stat-row"><strong>8.30</strong> Aamupala</div>
+          <div class="stat-row">
+            <strong>9.15</strong> Tuhansien tuntemusten taukopaikka<br>
+            <span class="mini">Houseband. Aamuhartaus: Maleena Savolainen. Nuoren puheenvuoro: Joel Aalto. Musiikki: Sanni Rusama.</span>
+          </div>
+          <div class="stat-row">
+            <strong>11.00</strong> Rakkaus tulee kylään<br>
+            <span class="mini">Ehtoollismessu: saarna Samuli Luomaranta, liturgi Markus Malmivaara.</span>
+          </div>
+          <div class="stat-row"><strong>12.30</strong> Lounas</div>
+          <div class="stat-row">
+            <strong>13.15</strong> Yksi ei hylkää, yksi ei unohda<br>
+            <span class="mini">Finaali: Papipike, houseband, viimeiset fiilikset ja infot. Raamattuopetus 5: Eetu Airevuo.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- HISTORY -->
     <section id="tab_history" class="card" style="display:none;">
       <h2>Bet History</h2>
@@ -534,7 +628,7 @@
   }
 
   function showTab(name) {
-    const tabs = ['home','cashier','sports','blackjack','history','bonus'];
+    const tabs = ['home','cashier','sports','blackjack','program','history','bonus'];
     tabs.forEach(t => {
       document.getElementById('tab_' + t).style.display = (t === name) ? 'block' : 'none';
     });
@@ -622,15 +716,12 @@
 
     if (storageAvailable()) {
       localStorage.setItem(PERSIST_KEY, json);
-      // We also set a small marker cookie so you know cookies are present
       setCookie('kk_marker','1',365);
     } else {
       // Cookie fallback with chunking
-      // Clear previous chunks
       const prevParts = parseInt(getCookie(COOKIE_PARTS_KEY) || '0', 10);
       for (let i=0; i<prevParts; i++) deleteCookie(COOKIE_PREFIX + i);
 
-      // Split into ~3500‑char chunks
       const chunkSize = 3500;
       const parts = Math.ceil(json.length / chunkSize);
       for (let i=0; i<parts; i++) {
@@ -643,18 +734,13 @@
 
   function loadState() {
     let raw = null;
-    if (storageAvailable()) {
-      raw = localStorage.getItem(PERSIST_KEY);
-    }
+    if (storageAvailable()) raw = localStorage.getItem(PERSIST_KEY);
+
     if (!raw) {
-      // Try cookie chunks
       const parts = parseInt(getCookie(COOKIE_PARTS_KEY) || '0', 10);
       if (parts > 0) {
         let s = '';
-        for (let i=0; i<parts; i++) {
-          const piece = getCookie(COOKIE_PREFIX + i) || '';
-          s += piece;
-        }
+        for (let i=0; i<parts; i++) s += (getCookie(COOKIE_PREFIX + i) || '');
         raw = s || null;
       }
     }
@@ -663,7 +749,6 @@
     try {
       const data = JSON.parse(raw);
 
-      // Assign safely
       state.balance   = Number(data.balance || 0);
       state.cashierTx = Array.isArray(data.cashierTx) ? data.cashierTx : [];
       state.nextBetId = Number(data.nextBetId || 1);
@@ -671,19 +756,18 @@
       state.history   = Array.isArray(data.history) ? data.history : [];
 
       if (data.bj) {
-        state.bj.inRound = !!data.bj.inRound;
-        state.bj.hands = Array.isArray(data.bj.hands) ? data.bj.hands : [];
+        state.bj.inRound   = !!data.bj.inRound;
+        state.bj.hands     = Array.isArray(data.bj.hands) ? data.bj.hands : [];
         state.bj.handIndex = Number(data.bj.handIndex || 0);
-        state.bj.dealer = data.bj.dealer || { cards: [], holeHidden: true };
+        state.bj.dealer    = data.bj.dealer || { cards: [], holeHidden: true };
         state.bj.insurance = Number(data.bj.insurance || 0);
-        state.bj.totalStake = Number(data.bj.totalStake || 0);
-        state.bj.history = Array.isArray(data.bj.history) ? data.bj.history : [];
+        state.bj.totalStake= Number(data.bj.totalStake || 0);
+        state.bj.history   = Array.isArray(data.bj.history) ? data.bj.history : [];
       }
 
       state.bc_snapshot_html = data.bc_snapshot_html || "";
       state.bc_playerId = Number(data.bc_playerId || 0);
 
-      // Restore Bonus Calculator DOM snapshot
       if (state.bc_snapshot_html) {
         const bc = document.getElementById('bc_players');
         if (bc) bc.innerHTML = state.bc_snapshot_html;
@@ -697,14 +781,12 @@
   function clearPersistence() {
     if (!confirm('This will clear saved balance, bets, blackjack, and bonus calculator. Continue?')) return;
 
-    // Clear storage
     if (storageAvailable()) localStorage.removeItem(PERSIST_KEY);
     const prevParts = parseInt(getCookie(COOKIE_PARTS_KEY) || '0', 10);
     for (let i=0; i<prevParts; i++) deleteCookie(COOKIE_PREFIX + i);
     deleteCookie(COOKIE_PARTS_KEY);
     deleteCookie('kk_marker');
 
-    // Reset runtime state
     state.balance = 0;
     state.cashierTx = [];
     state.nextBetId = 1;
@@ -718,7 +800,6 @@
     state.bc_snapshot_html = "";
     state.bc_playerId = 0;
 
-    // Reset UI
     updateBalanceUI();
     renderCashierTx();
     renderOpenBets();
@@ -727,7 +808,6 @@
     if (bc) bc.innerHTML = '';
     window.bc_playerId = 0;
 
-    // Persist cleared
     persistState();
   }
 
@@ -1098,7 +1178,6 @@
       if (dealerBJ) {
         state.bj.dealer.holeHidden = false;
         let returned = 0;
-        // If insurance was somehow placed pre-peek (not in our flow), pay it here:
         if (state.bj.insurance > 0) returned += state.bj.insurance * 3;
         if (playerBJ) {
           returned += stake; // push
@@ -1256,7 +1335,6 @@
       results.push({hand:h, ret, res});
     });
 
-    // Insurance loses here if dealer didn't have BJ
     state.balance += returned;
 
     const dealerStr = bj_handToString(state.bj.dealer.cards) + ` (${dealerTotal})`;
