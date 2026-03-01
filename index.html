@@ -230,7 +230,6 @@
       <button data-tab="cashier" onclick="showTab('cashier')">Cashier</button>
       <button data-tab="sports" onclick="showTab('sports')">Sports</button>
       <button data-tab="blackjack" onclick="showTab('blackjack')">Blackjack</button>
-      <button data-tab="program" onclick="showTab('program')">Program</button>
       <button data-tab="history" onclick="showTab('history')">Bet History</button>
       <button data-tab="bonus" onclick="showTab('bonus')">Bonus Calculator</button>
     </nav>
@@ -396,103 +395,10 @@
             <div id="bj_playerHandsWrap" class="bj-row"></div>
           </div>
 
-          <div class="grid-3" style="margin-top:10px;">
+          <div class="grid-3" style="margin-top:10px%;">
             <div class="stat-row"><span>Insurance</span><strong id="bj_insurance">€0.00</strong></div>
             <div class="stat-row"><span>Round Return</span><strong id="bj_roundReturn">€0.00</strong></div>
             <div class="stat-row"><span>Net</span><strong id="bj_roundNet">€0.00</strong></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROGRAM -->
-    <section id="tab_program" class="card" style="display:none;">
-      <h2>Program</h2>
-      <p>Full weekend schedule as separate blocks.</p>
-
-      <!-- Friday -->
-      <div class="card">
-        <h3>Perjantai 6.3.</h3>
-        <div class="list">
-          <div class="stat-row"><strong>16.00</strong> Ilmoittautuminen ja majoittuminen</div>
-          <div class="stat-row"><strong>17.00–18.00</strong> Päivällinen</div>
-          <div class="stat-row">
-            <strong>18.15</strong> Isolla vaiheella valoa kohti<br>
-            <span class="mini">Yhteiset avajaiset: houseband, festariväki, juontajat.</span>
-          </div>
-          <div class="stat-row">
-            <strong>19.15</strong> Tuutin täydeltä hyviä uutisia<br>
-            <span class="mini">Nuoren puheenvuoro: Elisa Suopajärvi. Raamattuopetus 1: Jumalan järjestämä pelastusvene – Antti Koskenniemi.</span>
-          </div>
-          <div class="stat-row"><strong>20.30–21.00</strong> Iltapala</div>
-          <div class="stat-row">
-            <strong>21.15</strong> Ihmeitä ja tähtiä: who is Amos!<br>
-            <span class="mini">Perjantai-illan festarileirihuumaa: räppitähti Amos.</span>
-          </div>
-          <div class="stat-row">
-            <strong>22.30</strong> Hän on uskollinen Jumala<br>
-            <span class="mini">Iltamessu: Johan Helkkula ja Markus Malmivaara, musiikissa Riina Halme.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Saturday -->
-      <div class="card">
-        <h3>Lauantai 7.3.</h3>
-        <div class="list">
-          <div class="stat-row"><strong>8.00</strong> Aamupala</div>
-          <div class="stat-row">
-            <strong>9.00</strong> Valot pimeyksien reunalla<br>
-            <span class="mini">Aamunhartaus: Milka Ikäläinen. Nuoren puheenvuoro: Emma Palola. Raamattuopetus 2: Päivi Niemi.</span>
-          </div>
-          <div class="stat-row"><strong>10.45</strong> Workshopit</div>
-          <div class="stat-row"><strong>11.30–12.30</strong> Lounas</div>
-          <div class="stat-row">
-            <strong>12.45</strong> Keskipäivän kotibileet<br>
-            <span class="mini">Musiikki: Pro Fide. Raamattuopetus 3: Tiina Karlsson.</span>
-          </div>
-          <div class="stat-row"><strong>14.00</strong> Kahvit ja mehut</div>
-          <div class="stat-row"><strong>14.30</strong> Studioinfot</div>
-          <div class="stat-row"><strong>14.40</strong> Studiot</div>
-          <div class="stat-row"><strong>16.00</strong> Ihan pihalla -superspesiaali</div>
-          <div class="stat-row"><strong>17.00–18.00</strong> Päivällinen</div>
-          <div class="stat-row">
-            <strong>18.00</strong> Open stage<br>
-            <span class="mini">Avoin lava erilaisille ja erityisille esiintyjille.</span>
-          </div>
-          <div class="stat-row">
-            <strong>19.30</strong> Tarinoita tulipunaisesta taivaanrannasta<br>
-            <span class="mini">Iltagaala, festaridokkari, sketsit, workshop-sato. Nuoren puheenvuoro: Veikko Pulakka. Raamattuopetus 4: Juha Heinonen.</span>
-          </div>
-          <div class="stat-row"><strong>20.30</strong> Iltapala</div>
-          <div class="stat-row">
-            <strong>21.30</strong> Kuinka paljon voi kestää<br>
-            <span class="mini">Kotipalaajat & stand-up: Teemu Kalliota.</span>
-          </div>
-          <div class="stat-row">
-            <strong>23.00</strong> Minä olen sinun kanssasi<br>
-            <span class="mini">Iltahartaus: Minttu Gummerus ja houseband.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sunday -->
-      <div class="card">
-        <h3>Sunnuntai 8.3.</h3>
-        <div class="list">
-          <div class="stat-row"><strong>8.30</strong> Aamupala</div>
-          <div class="stat-row">
-            <strong>9.15</strong> Tuhansien tuntemusten taukopaikka<br>
-            <span class="mini">Houseband. Aamuhartaus: Maleena Savolainen. Nuoren puheenvuoro: Joel Aalto. Musiikki: Sanni Rusama.</span>
-          </div>
-          <div class="stat-row">
-            <strong>11.00</strong> Rakkaus tulee kylään<br>
-            <span class="mini">Ehtoollismessu: saarna Samuli Luomaranta, liturgi Markus Malmivaara.</span>
-          </div>
-          <div class="stat-row"><strong>12.30</strong> Lounas</div>
-          <div class="stat-row">
-            <strong>13.15</strong> Yksi ei hylkää, yksi ei unohda<br>
-            <span class="mini">Finaali: Papipike, houseband, viimeiset fiilikset ja infot. Raamattuopetus 5: Eetu Airevuo.</span>
           </div>
         </div>
       </div>
@@ -628,7 +534,7 @@
   }
 
   function showTab(name) {
-    const tabs = ['home','cashier','sports','blackjack','program','history','bonus'];
+    const tabs = ['home','cashier','sports','blackjack','history','bonus'];
     tabs.forEach(t => {
       document.getElementById('tab_' + t).style.display = (t === name) ? 'block' : 'none';
     });
