@@ -222,14 +222,8 @@
     background: rgba(2,6,23,0.55);
   }
 
-  .inline {
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-
-  .mini {
-    font-size: 13px; color: var(--text-muted);
-  }
-
+  .inline { display: inline-flex; align-items: center; gap: 8px; }
+  .mini { font-size: 13px; color: var(--text-muted); }
   .tag {
     display: inline-block;
     padding: 6px 8px; border-radius: 8px;
@@ -239,39 +233,50 @@
   }
 
   .list { display: grid; gap: 10px; }
-  .bet-card {
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: rgba(15,23,42,0.7);
-  }
-
+  .bet-card { padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(15,23,42,0.7); }
   .table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .table th, .table td {
-    padding: 10px; border-bottom: 1px solid rgba(148,163,184,0.15);
-    text-align: left;
-  }
+  .table th, .table td { padding: 10px; border-bottom: 1px solid rgba(148,163,184,0.15); text-align: left; }
   .table th { color: #e5e7eb; font-weight: 700; }
   .table tr:last-child td { border-bottom: none; }
 
-  /* Progress bar for Bonus tab */
-  .progress-bar {
-    width: 100%; height: 10px; background: #333; border-radius: 5px; margin-top: 10px;
+  /* Card visuals (Blackjack) */
+  .bj-table {
+    background: radial-gradient(900px 500px at 50% -20%, rgba(34,197,94,0.12), rgba(14,165,233,0.08));
+    border: 1px dashed rgba(148,163,184,0.25);
+    border-radius: 16px;
+    padding: 12px;
   }
-  .progress-fill {
-    height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #0ea5e9);
-    border-radius: 5px; transition: width 0.3s ease;
+  .bj-row { display: grid; gap: 12px; }
+  .bj-hand {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+    background: rgba(15,23,42,0.6);
+  }
+  .bj-hand.active { outline: 2px solid #22c55e; }
+  .cards { display: flex; gap: 8px; flex-wrap: wrap; }
+  .card-ui {
+    width: 58px; height: 82px; border-radius: 8px;
+    background: #f8fafc; color: #0f172a;
+    display: grid; grid-template-rows: auto 1fr auto;
+    padding: 6px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    position: relative;
+  }
+  .card-ui.red { color: #be123c; }
+  .card-rank { font-weight: 800; font-size: 18px; }
+  .card-suit { font-size: 16px; }
+  .card-center { display: grid; place-items: center; font-size: 18px; opacity: 0.9; }
+  .card-back {
+    width: 58px; height: 82px; border-radius: 8px;
+    background: repeating-linear-gradient(45deg, #0ea5e9, #0ea5e9 6px, #0369a1 6px, #0369a1 12px);
+    border: 2px solid #075985;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   }
 
-  /* Roulette visual pill */
-  .roulette-result {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border);
-    background: rgba(15,23,42,0.7); font-weight: 700;
-  }
-  .rouge { color: #fecaca; } /* light red text */
-  .noir { color: #c7d2fe; }  /* light indigo text */
-  .vert { color: #bbf7d0; }  /* light green text */
+  .bj-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .bj-bad { color: #fecaca; }
+  .bj-good { color: #bbf7d0; }
 </style>
 </head>
 <body>
@@ -296,9 +301,9 @@
 
     <nav id="mainNav" class="nav" aria-label="Main">
       <button class="active" data-tab="home" onclick="showTab('home')">Home</button>
-      <button data-tab="deposit" onclick="showTab('deposit')">Deposit</button>
+      <button data-tab="cashier" onclick="showTab('cashier')">Cashier</button>
       <button data-tab="sports" onclick="showTab('sports')">Sports</button>
-      <button data-tab="roulette" onclick="showTab('roulette')">Roulette</button>
+      <button data-tab="blackjack" onclick="showTab('blackjack')">Blackjack</button>
       <button data-tab="history" onclick="showTab('history')">Bet History</button>
       <button data-tab="bonus" onclick="showTab('bonus')">Bonus Calculator</button>
     </nav>
@@ -310,59 +315,79 @@
     <section id="tab_home" class="card">
       <h1>Welcome to KarkkuKasino 👋</h1>
       <p>
-        Manage your balance, deposit funds, place sports bets (97% RTP model), play Roulette with
-        standard odds and house edge, track bet history, and use the bonus wagering calculator—all in one place.
+        Use the <strong>Cashier</strong> to deposit or cash out, place sports bets,
+        play <strong>Blackjack</strong> with a 6‑deck shoe and standard rules,
+        track history, and monitor bonus wagering progress.
       </p>
       <div class="grid-3">
         <div class="card">
-          <h3>Start by Depositing</h3>
-          <p class="mini">Card · Cash · MobilePay · Crypto</p>
-          <button class="primary" onclick="showTab('deposit')">Go to Deposit</button>
+          <h3>Go to Cashier</h3>
+          <p class="mini">Deposit · Cashout · Transactions</p>
+          <button class="primary" onclick="showTab('cashier')">Open Cashier</button>
         </div>
         <div class="card">
           <h3>Sports Betting</h3>
-          <p class="mini">Enter an outcome probability — odds are set at 97% RTP</p>
-          <button class="primary" onclick="showTab('sports')">Go to Sports</button>
+          <p class="mini">Enter a probability — odds at 97% RTP</p>
+          <button class="primary" onclick="showTab('sports')">Open Sports</button>
         </div>
         <div class="card">
-          <h3>Play Roulette</h3>
-          <p class="mini">European or American rules with standard payouts</p>
-          <button class="primary" onclick="showTab('roulette')">Open Roulette</button>
+          <h3>Play Blackjack</h3>
+          <p class="mini">Dealer stands on soft 17 · BJ pays 3:2</p>
+          <button class="primary" onclick="showTab('blackjack')">Open Blackjack</button>
         </div>
       </div>
     </section>
 
-    <!-- DEPOSIT -->
-    <section id="tab_deposit" class="card" style="display:none;">
-      <h2>Deposit</h2>
-      <p>Choose a method and amount. This will update your global balance.</p>
+    <!-- CASHIER -->
+    <section id="tab_cashier" class="card" style="display:none;">
+      <h2>Cashier</h2>
+      <p>Deposit funds, cash out, and view your transaction history. This is a local demo — no real payments.</p>
 
       <div class="grid-2">
+        <!-- Deposit -->
         <div class="card">
-          <label for="depositMethod">Method</label>
-          <select id="depositMethod">
+          <h3>Deposit</h3>
+          <label for="cashierDepositMethod">Method</label>
+          <select id="cashierDepositMethod">
             <option value="card">Card</option>
             <option value="cash">Cash</option>
             <option value="mobilepay">MobilePay</option>
             <option value="crypto">Crypto</option>
           </select>
 
-          <label for="depositAmount">Amount (€)</label>
-          <input id="depositAmount" type="number" min="0" step="0.01" placeholder="0.00" />
+          <label for="cashierDepositAmount">Amount (€)</label>
+          <input id="cashierDepositAmount" type="number" min="0" step="0.01" placeholder="0.00" />
 
-          <button class="primary" onclick="handleDeposit()">Deposit</button>
+          <button class="primary" onclick="cashierDeposit()">Deposit</button>
 
           <div class="stat-row" style="margin-top:12px;">
             <span>Current Balance</span>
-            <strong id="depositBalance">€0.00</strong>
+            <strong id="cashierBalance">€0.00</strong>
           </div>
         </div>
 
+        <!-- Cashout -->
         <div class="card">
-          <h3>Recent Deposits</h3>
-          <div id="depositList" class="list">
-            <div class="mini">No deposits yet.</div>
-          </div>
+          <h3>Cashout</h3>
+          <label for="cashierWithdrawMethod">Withdrawal Method</label>
+          <select id="cashierWithdrawMethod">
+            <option value="cash">Cash</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="mobilepay">MobilePay</option>
+            <option value="crypto">Crypto</option>
+          </select>
+
+          <label for="cashierWithdrawAmount">Amount (€)</label>
+          <input id="cashierWithdrawAmount" type="number" min="0" step="0.01" placeholder="0.00" />
+
+          <button class="primary" onclick="cashierWithdraw()">Cash Out</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Transactions</h3>
+        <div id="cashierTxList" class="list">
+          <div class="mini">No transactions yet.</div>
         </div>
       </div>
     </section>
@@ -404,67 +429,51 @@
       </div>
     </section>
 
-    <!-- ROULETTE -->
-    <section id="tab_roulette" class="card" style="display:none;">
-      <h2>Roulette</h2>
-      <p>Play European (single 0) or American (0 & 00) roulette with standard payouts.
-        Add multiple bets to your slip, then spin the wheel.</p>
+    <!-- BLACKJACK -->
+    <section id="tab_blackjack" class="card" style="display:none;">
+      <h2>Blackjack</h2>
+      <p>Rules: 6‑deck shoe, dealer <strong>stands on soft 17</strong> (S17) with peek on Ace/10, Blackjack pays <strong>3:2</strong>, Insurance pays <strong>2:1</strong>, one split (Aces get one card only).</p>
 
       <div class="grid-3">
         <div class="card">
-          <label for="ru_wheel">Wheel Type</label>
-          <select id="ru_wheel" onchange="ru_refreshPotential()">
-            <option value="european">European (single 0)</option>
-            <option value="american">American (0 & 00)</option>
-          </select>
+          <label for="bj_stake">Stake (€)</label>
+          <input id="bj_stake" type="number" min="0.01" step="0.01" placeholder="0.00" />
 
-          <label for="ru_betType">Bet Type</label>
-          <select id="ru_betType" onchange="ru_renderBetSelector()">
-            <option value="straight">Straight (single number) — 35:1</option>
-            <option value="redblack">Red / Black — 1:1</option>
-            <option value="evenodd">Even / Odd — 1:1</option>
-            <option value="lowhigh">Low (1–18) / High (19–36) — 1:1</option>
-            <option value="dozen">Dozen (1–12 / 13–24 / 25–36) — 2:1</option>
-            <option value="column">Column (1 / 2 / 3) — 2:1</option>
-          </select>
-
-          <div id="ru_selector" style="margin-top:8px;"></div>
-
-          <label for="ru_stake" style="margin-top:12px;">Stake (€)</label>
-          <input id="ru_stake" type="number" min="0.01" step="0.01" placeholder="0.00" oninput="ru_refreshPotential()"/>
+          <button class="primary" id="bj_dealBtn" onclick="bj_deal()">Deal</button>
 
           <div class="stat-row" style="margin-top:10px;">
-            <span>Potential Return (if win)</span>
-            <strong id="ru_potential">—</strong>
+            <span>Status</span>
+            <strong id="bj_status">Waiting for your bet…</strong>
           </div>
 
-          <button class="primary" onclick="ru_addToSlip()">Add to Slip</button>
+          <div class="bj-controls" style="margin-top:10px;">
+            <button class="secondary" id="bj_hitBtn" onclick="bj_hit()" disabled>Hit</button>
+            <button class="secondary" id="bj_standBtn" onclick="bj_stand()" disabled>Stand</button>
+            <button class="secondary" id="bj_doubleBtn" onclick="bj_double()" disabled>Double</button>
+            <button class="secondary" id="bj_splitBtn" onclick="bj_split()" disabled>Split</button>
+            <button class="secondary" id="bj_insBtn" onclick="bj_takeInsurance()" disabled>Insurance</button>
+          </div>
         </div>
 
-        <div class="card" style="grid-column: span 2;">
-          <h3>Bet Slip</h3>
-          <div id="ru_slip" class="list">
-            <div class="mini">No bets in slip.</div>
+        <div class="card bj-table" style="grid-column: span 2;">
+          <h3>Table</h3>
+
+          <div class="bj-row" style="margin-top:8px;">
+            <div class="bj-hand" id="bj_dealer">
+              <div class="inline" style="justify-content:space-between; width:100%;">
+                <strong>Dealer</strong>
+                <span id="bj_dealerTotal" class="mini">—</span>
+              </div>
+              <div class="cards" id="bj_dealerCards"></div>
+            </div>
+
+            <div id="bj_playerHandsWrap" class="bj-row"></div>
           </div>
 
           <div class="grid-3" style="margin-top:10px;">
-            <div class="stat-row"><span>Total Stake This Spin</span><strong id="ru_totalStake">€0.00</strong></div>
-            <div class="stat-row"><span>Wheel</span><strong id="ru_wheelLabel">European</strong></div>
-            <div class="stat-row"><span>Balance after stake</span><strong id="ru_previewAfter">—</strong></div>
-          </div>
-
-          <button class="primary" style="margin-top:12px;" onclick="ru_placeAndSpin()">Place Bets & Spin</button>
-
-          <div class="card" style="margin-top:12px;">
-            <h3>Last Result</h3>
-            <div id="ru_lastResult" class="roulette-result">
-              <span class="mini">No spins yet.</span>
-            </div>
-            <div class="grid-3" style="margin-top:10px;">
-              <div class="stat-row"><span>Staked</span><strong id="ru_lastStaked">€0.00</strong></div>
-              <div class="stat-row"><span>Returned</span><strong id="ru_lastReturned">€0.00</strong></div>
-              <div class="stat-row"><span>Net</span><strong id="ru_lastNet">€0.00</strong></div>
-            </div>
+            <div class="stat-row"><span>Insurance</span><strong id="bj_insurance">€0.00</strong></div>
+            <div class="stat-row"><span>Round Return</span><strong id="bj_roundReturn">€0.00</strong></div>
+            <div class="stat-row"><span>Net</span><strong id="bj_roundNet">€0.00</strong></div>
           </div>
         </div>
       </div>
@@ -476,7 +485,7 @@
 
       <div class="inline" style="gap:8px; margin-bottom:10px;">
         <button class="secondary" id="histBtnSports" onclick="setHistoryMode('sports')">Sports</button>
-        <button class="secondary" id="histBtnRoulette" onclick="setHistoryMode('roulette')">Roulette</button>
+        <button class="secondary" id="histBtnBlackjack" onclick="setHistoryMode('blackjack')">Blackjack</button>
       </div>
 
       <div id="historySports" class="card">
@@ -500,23 +509,23 @@
         </div>
       </div>
 
-      <div id="historyRoulette" class="card" style="display:none;">
+      <div id="historyBlackjack" class="card" style="display:none;">
         <div style="overflow-x:auto;">
-          <table class="table" aria-describedby="historyCaptionRoulette">
-            <caption id="historyCaptionRoulette" class="sr-only">Roulette spins</caption>
+          <table class="table" aria-describedby="historyCaptionBJ">
+            <caption id="historyCaptionBJ" class="sr-only">Blackjack rounds</caption>
             <thead>
               <tr>
                 <th>Time</th>
-                <th>Wheel</th>
-                <th>Outcome</th>
+                <th>Hands</th>
+                <th>Dealer</th>
                 <th>Staked (€)</th>
                 <th>Returned (€)</th>
                 <th>Net (€)</th>
-                <th>Bets</th>
+                <th>Summary</th>
               </tr>
             </thead>
-            <tbody id="historyRowsRoulette">
-              <tr><td colspan="7" class="mini">No roulette spins yet.</td></tr>
+            <tbody id="historyRowsBJ">
+              <tr><td colspan="7" class="mini">No blackjack rounds yet.</td></tr>
             </tbody>
           </table>
         </div>
@@ -540,18 +549,27 @@
      =========================== */
   const state = {
     balance: 0,
-    nextBetId: 1,
+
+    // Cashier
+    cashierTx: [], // {type:'deposit'|'withdrawal', method, amount, ts}
 
     // Sports
+    nextBetId: 1,
     openBets: [],     // {id, prob, odds, stake, potential, ts}
     history: [],      // SPORTS settled: {id, prob, odds, stake, result, payout, ts}
 
-    // Deposits
-    deposits: [],     // {method, amount, ts}
-
-    // Roulette
-    rouletteSlip: [], // pending bets for next spin: {type, sel, stake}
-    rouletteHistory: [], // spins: {ts, wheel, outcome, staked, returned, net, bets:[{type, sel, stake, win, ret}]}
+    // Blackjack
+    bj: {
+      shoe: [],
+      inRound: false,
+      hands: [],      // [{cards:[], stake, done, doubled, isSplitAce, isBJ, result, payout}]
+      handIndex: 0,
+      dealer: { cards: [], holeHidden: true },
+      insurance: 0,
+      totalStake: 0,
+      lastRound: null, // {ts, staked, returned, net, dealerStr, handsStr[]}
+      history: []      // array of lastRound
+    },
   };
 
   function fmtEUR(n) {
@@ -566,11 +584,10 @@
 
   function updateBalanceUI() {
     document.getElementById('balanceDisplay').textContent = fmtEUR(state.balance);
-    const depBal = document.getElementById('depositBalance');
-    if (depBal) depBal.textContent = fmtEUR(state.balance);
-
-    // roulette preview
-    ru_updateTotals();
+    const cBal = document.getElementById('cashierBalance');
+    if (cBal) cBal.textContent = fmtEUR(state.balance);
+    // Sports preview
+    updateSportsOdds();
   }
 
   function setActiveNav(tabName) {
@@ -589,18 +606,18 @@
   }
 
   function showTab(name) {
-    const tabs = ['home','deposit','sports','roulette','history','bonus'];
+    const tabs = ['home','cashier','sports','blackjack','history','bonus'];
     tabs.forEach(t => {
       document.getElementById('tab_' + t).style.display = (t === name) ? 'block' : 'none';
     });
     setActiveNav(name);
     closeMenuIfOpen();
 
+    if (name === 'cashier') renderCashierTx();
     if (name === 'history') renderHistory();
-    if (name === 'deposit') renderDeposits();
-    if (name === 'roulette') {
-      ru_renderBetSelector();
-      ru_updateTotals();
+    if (name === 'blackjack') {
+      if (state.bj.shoe.length === 0) bj_buildShoe();
+      bj_refreshUI();
     }
   }
 
@@ -611,41 +628,48 @@
   }
 
   /* ===========================
-     Deposit
+     Cashier
      =========================== */
-  function handleDeposit() {
-    const method = document.getElementById('depositMethod').value;
-    const amount = parseFloat(document.getElementById('depositAmount').value || "0");
-
-    if (!(amount > 0)) {
-      alert("Please enter a valid deposit amount > 0.");
-      return;
-    }
-
+  function cashierDeposit() {
+    const method = document.getElementById('cashierDepositMethod').value;
+    const amount = parseFloat(document.getElementById('cashierDepositAmount').value || '0');
+    if (!(amount > 0)) return alert('Enter a valid deposit amount > 0.');
     state.balance += amount;
-    state.deposits.unshift({ method, amount, ts: nowStr() });
-
-    document.getElementById('depositAmount').value = "";
+    state.cashierTx.unshift({ type:'deposit', method, amount, ts: nowStr() });
+    document.getElementById('cashierDepositAmount').value = '';
     updateBalanceUI();
-    renderDeposits();
+    renderCashierTx();
   }
 
-  function renderDeposits() {
-    const list = document.getElementById('depositList');
-    list.innerHTML = "";
-    if (state.deposits.length === 0) {
-      list.innerHTML = `<div class="mini">No deposits yet.</div>`;
+  function cashierWithdraw() {
+    const method = document.getElementById('cashierWithdrawMethod').value;
+    const amount = parseFloat(document.getElementById('cashierWithdrawAmount').value || '0');
+    if (!(amount > 0)) return alert('Enter a valid cashout amount > 0.');
+    if (amount > state.balance) return alert('Insufficient balance for this cashout.');
+    state.balance -= amount;
+    state.cashierTx.unshift({ type:'withdrawal', method, amount, ts: nowStr() });
+    document.getElementById('cashierWithdrawAmount').value = '';
+    updateBalanceUI();
+    renderCashierTx();
+  }
+
+  function renderCashierTx() {
+    const list = document.getElementById('cashierTxList');
+    list.innerHTML = '';
+    if (state.cashierTx.length === 0) {
+      list.innerHTML = `<div class="mini">No transactions yet.</div>`;
       return;
     }
-    state.deposits.slice(0, 10).forEach(dep => {
+    state.cashierTx.slice(0, 20).forEach(tx => {
       const row = document.createElement('div');
       row.className = 'stat-row';
       row.innerHTML = `
         <span class="inline">
-          <span class="tag" style="text-transform:capitalize;">${dep.method}</span>
-          <span class="mini">${dep.ts}</span>
+          <span class="tag" style="text-transform:capitalize;">${tx.type}</span>
+          <span class="tag" style="text-transform:capitalize;">${tx.method}</span>
+          <span class="mini">${tx.ts}</span>
         </span>
-        <strong>${fmtEUR(dep.amount)}</strong>
+        <strong>${fmtEUR(tx.amount)}</strong>
       `;
       list.appendChild(row);
     });
@@ -662,10 +686,11 @@
   }
 
   function updateSportsOdds() {
-    const pct = parseFloat(document.getElementById('sportProbability').value || "0");
-    const stake = parseFloat(document.getElementById('sportStake').value || "0");
+    const pct = parseFloat(document.getElementById('sportProbability')?.value || "0");
+    const stake = parseFloat(document.getElementById('sportStake')?.value || "0");
     const oddsEl = document.getElementById('sportOdds');
     const previewEl = document.getElementById('previewBalance');
+    if (!oddsEl || !previewEl) return;
 
     const odds = oddsFromProbability(pct);
     if (!odds) oddsEl.textContent = '—';
@@ -680,18 +705,9 @@
     const stake = parseFloat(document.getElementById('sportStake').value || "0");
     const odds = oddsFromProbability(pct);
 
-    if (!odds || !(pct > 0 && pct < 100)) {
-      alert("Enter a valid probability between 0 and 100 (exclusive).");
-      return;
-    }
-    if (!(stake > 0)) {
-      alert("Enter a valid stake > 0.");
-      return;
-    }
-    if (stake > state.balance) {
-      alert("Insufficient balance for this stake.");
-      return;
-    }
+    if (!odds || !(pct > 0 && pct < 100)) return alert("Enter a valid probability between 0 and 100 (exclusive).");
+    if (!(stake > 0)) return alert("Enter a valid stake > 0.");
+    if (stake > state.balance) return alert("Insufficient balance for this stake.");
 
     state.balance -= stake;
     const bet = {
@@ -766,7 +782,7 @@
   }
 
   /* ===========================
-     History (Sports / Roulette)
+     History (Sports / Blackjack)
      =========================== */
   let historyMode = 'sports';
   function setHistoryMode(mode) {
@@ -777,11 +793,11 @@
   function renderHistory() {
     // Toggle buttons
     document.getElementById('histBtnSports').classList.toggle('active', historyMode === 'sports');
-    document.getElementById('histBtnRoulette').classList.toggle('active', historyMode === 'roulette');
+    document.getElementById('histBtnBlackjack').classList.toggle('active', historyMode === 'blackjack');
 
     // Toggle sections
     document.getElementById('historySports').style.display = (historyMode === 'sports') ? 'block' : 'none';
-    document.getElementById('historyRoulette').style.display = (historyMode === 'roulette') ? 'block' : 'none';
+    document.getElementById('historyBlackjack').style.display = (historyMode === 'blackjack') ? 'block' : 'none';
 
     if (historyMode === 'sports') {
       const tbody = document.getElementById('historyRowsSports');
@@ -805,30 +821,25 @@
         tbody.appendChild(tr);
       });
     } else {
-      const tbody = document.getElementById('historyRowsRoulette');
+      const tbody = document.getElementById('historyRowsBJ');
       tbody.innerHTML = "";
-      if (state.rouletteHistory.length === 0) {
+      if (state.bj.history.length === 0) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="7" class="mini">No roulette spins yet.</td>`;
+        tr.innerHTML = `<td colspan="7" class="mini">No blackjack rounds yet.</td>`;
         tbody.appendChild(tr);
         return;
       }
-      state.rouletteHistory.forEach(s => {
-        // Bets summary string
-        const betsStr = s.bets.map(b => {
-          const winTag = b.win ? '✅' : '❌';
-          return `${winTag} ${b.desc} — ${fmtEUR(b.stake)}${b.win ? ' → '+fmtEUR(b.ret) : ''}`;
-        }).join('<br/>');
-
+      state.bj.history.forEach(r => {
+        const handsStr = r.handsStr.map((s,i)=>`H${i+1}: ${s}`).join('<br/>');
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${s.ts}</td>
-          <td>${s.wheel === 'european' ? 'European' : 'American'}</td>
-          <td>${s.outcomeDisplay}</td>
-          <td>${s.staked.toFixed(2)}</td>
-          <td>${s.returned.toFixed(2)}</td>
-          <td>${s.net.toFixed(2)}</td>
-          <td>${betsStr}</td>
+          <td>${r.ts}</td>
+          <td>${handsStr}</td>
+          <td>${r.dealerStr}</td>
+          <td>${r.staked.toFixed(2)}</td>
+          <td>${r.returned.toFixed(2)}</td>
+          <td>${r.net.toFixed(2)}</td>
+          <td>${r.summary}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -836,309 +847,402 @@
   }
 
   /* ===========================
-     Roulette
+     Blackjack
      =========================== */
-  const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+  const SUITS = ['♠','♥','♦','♣'];
+  const RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 
-  function ru_getWheelSymbols() {
-    const wheel = document.getElementById('ru_wheel').value;
-    if (wheel === 'american') {
-      // Strings for 0 and 00; numbers 1-36
-      return ['0','00', ...Array.from({length:36}, (_,i)=>String(i+1))];
-    } else {
-      return ['0', ...Array.from({length:36}, (_,i)=>String(i+1))];
+  function bj_buildShoe() {
+    // 6-deck shoe
+    const shoe = [];
+    for (let d=0; d<6; d++) {
+      for (const s of SUITS) {
+        for (const r of RANKS) {
+          shoe.push({ r, s });
+        }
+      }
     }
+    // Shuffle
+    for (let i = shoe.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i+1));
+      [shoe[i], shoe[j]] = [shoe[j], shoe[i]];
+    }
+    state.bj.shoe = shoe;
   }
 
-  function ru_colorOf(sym) {
-    if (sym === '0' || sym === '00') return 'green';
-    const n = parseInt(sym, 10);
-    if (REDS.has(n)) return 'red';
-    return 'black';
+  function bj_draw() {
+    if (state.bj.shoe.length < 52) bj_buildShoe();
+    return state.bj.shoe.pop();
   }
 
-  // Payout multiplier (total return / stake) if bet wins; 0 if loses.
-  function ru_multiplier(type) {
-    switch(type) {
-      case 'straight': return 36; // 35:1 => total 36x
-      case 'redblack':
-      case 'evenodd':
-      case 'lowhigh': return 2;   // 1:1
-      case 'dozen':
-      case 'column' : return 3;   // 2:1
-      default: return 0;
+  function bj_handValue(cards) {
+    // Aces can be 1 or 11
+    let total = 0, aces = 0;
+    cards.forEach(c => {
+      if (c.r === 'A') { aces++; total += 11; }
+      else if (['K','Q','J'].includes(c.r)) total += 10;
+      else total += parseInt(c.r,10);
+    });
+    while (total > 21 && aces > 0) {
+      total -= 10; aces--;
     }
+    const soft = cards.some(c=>c.r==='A') && total <= 21 && (cards.reduce((t,c)=>t + (c.r==='A'?11:(['K','Q','J'].includes(c.r)?10:parseInt(c.r,10))),0) !== total);
+    return { total, soft };
   }
 
-  function ru_betDescription(bet) {
-    switch (bet.type) {
-      case 'straight': return `Straight on ${bet.sel}`;
-      case 'redblack': return `Color ${bet.sel.toUpperCase()}`;
-      case 'evenodd': return (bet.sel === 'even' ? 'Even' : 'Odd');
-      case 'lowhigh': return (bet.sel === 'low' ? 'Low (1–18)' : 'High (19–36)');
-      case 'dozen': return `Dozen ${bet.sel === '1' ? '1–12' : bet.sel === '2' ? '13–24' : '25–36'}`;
-      case 'column': return `Column ${bet.sel}`;
-      default: return 'Bet';
-    }
+  function bj_isBlackjack(cards) {
+    if (cards.length !== 2) return false;
+    const vals = cards.map(c => c.r);
+    const hasAce = vals.includes('A');
+    const hasTenVal = vals.some(v => v==='10' || v==='J' || v==='Q' || v==='K');
+    return hasAce && hasTenVal;
   }
 
-  function ru_isWin(bet, outcomeSym) {
-    const color = ru_colorOf(outcomeSym);
-    if (bet.type === 'straight') {
-      return bet.sel === outcomeSym;
+  function bj_cardEl(card) {
+    const el = document.createElement('div');
+    if (card === 'HIDDEN') {
+      el.className = 'card-back';
+      return el;
     }
-    if (outcomeSym === '0' || outcomeSym === '00') {
-      return false; // zero(s) lose on these bet types
-    }
-    const n = parseInt(outcomeSym, 10);
-
-    switch (bet.type) {
-      case 'redblack':
-        return (bet.sel === 'red' && color === 'red') ||
-               (bet.sel === 'black' && color === 'black');
-      case 'evenodd':
-        return (bet.sel === 'even' && n % 2 === 0) ||
-               (bet.sel === 'odd' && n % 2 === 1);
-      case 'lowhigh':
-        return (bet.sel === 'low' && n >= 1 && n <= 18) ||
-               (bet.sel === 'high' && n >= 19 && n <= 36);
-      case 'dozen':
-        if (bet.sel === '1') return n >= 1 && n <= 12;
-        if (bet.sel === '2') return n >= 13 && n <= 24;
-        if (bet.sel === '3') return n >= 25 && n <= 36;
-        return false;
-      case 'column':
-        // Column 1: n%3==1, Column 2: n%3==2, Column 3: n%3==0
-        if (bet.sel === '1') return n % 3 === 1;
-        if (bet.sel === '2') return n % 3 === 2;
-        if (bet.sel === '3') return n % 3 === 0;
-        return false;
-      default:
-        return false;
-    }
+    const red = (card.s === '♥' || card.s === '♦');
+    el.className = 'card-ui' + (red ? ' red' : '');
+    el.innerHTML = `
+      <div class="card-rank">${card.r}</div>
+      <div class="card-center">${card.s}</div>
+      <div class="card-suit">${card.s}</div>
+    `;
+    return el;
   }
 
-  function ru_renderBetSelector() {
-    const type = document.getElementById('ru_betType').value;
-    const selBox = document.getElementById('ru_selector');
-    const wheel = document.getElementById('ru_wheel').value;
-    let html = '';
+  function bj_renderHands() {
+    // Dealer
+    const dWrap = document.getElementById('bj_dealerCards');
+    dWrap.innerHTML = '';
+    const dealer = state.bj.dealer;
+    dealer.cards.forEach((c, idx) => {
+      if (idx === 1 && dealer.holeHidden) dWrap.appendChild(bj_cardEl('HIDDEN'));
+      else dWrap.appendChild(bj_cardEl(c));
+    });
+    const dVal = bj_handValue(dealer.cards);
+    document.getElementById('bj_dealerTotal').textContent = dealer.holeHidden ? '—' : `${dVal.total}${dVal.soft ? ' (soft)' : ''}`;
 
-    if (type === 'straight') {
-      const symbols = ru_getWheelSymbols();
-      html = `
-        <label for="ru_sel_straight">Number</label>
-        <select id="ru_sel_straight">
-          ${symbols.map(s => `<option value="${s}">${s}</option>`).join('')}
-        </select>
-      `;
-    } else if (type === 'redblack') {
-      html = `
-        <label for="ru_sel_rb">Color</label>
-        <select id="ru_sel_rb">
-          <option value="red">Red</option>
-          <option value="black">Black</option>
-        </select>
-      `;
-    } else if (type === 'evenodd') {
-      html = `
-        <label for="ru_sel_eo">Parity</label>
-        <select id="ru_sel_eo">
-          <option value="even">Even</option>
-          <option value="odd">Odd</option>
-        </select>
-      `;
-    } else if (type === 'lowhigh') {
-      html = `
-        <label for="ru_sel_lh">Range</label>
-        <select id="ru_sel_lh">
-          <option value="low">Low (1–18)</option>
-          <option value="high">High (19–36)</option>
-        </select>
-      `;
-    } else if (type === 'dozen') {
-      html = `
-        <label for="ru_sel_dz">Dozen</label>
-        <select id="ru_sel_dz">
-          <option value="1">1st Dozen (1–12)</option>
-          <option value="2">2nd Dozen (13–24)</option>
-          <option value="3">3rd Dozen (25–36)</option>
-        </select>
-      `;
-    } else if (type === 'column') {
-      html = `
-        <label for="ru_sel_col">Column</label>
-        <select id="ru_sel_col">
-          <option value="1">Column 1</option>
-          <option value="2">Column 2</option>
-          <option value="3">Column 3</option>
-        </select>
-      `;
-    }
-    selBox.innerHTML = html;
-    ru_refreshPotential();
-  }
-
-  function ru_readSelection() {
-    const type = document.getElementById('ru_betType').value;
-    let sel = null;
-    if (type === 'straight') {
-      sel = document.getElementById('ru_sel_straight').value;
-    } else if (type === 'redblack') {
-      sel = document.getElementById('ru_sel_rb').value;
-    } else if (type === 'evenodd') {
-      sel = document.getElementById('ru_sel_eo').value;
-    } else if (type === 'lowhigh') {
-      sel = document.getElementById('ru_sel_lh').value;
-    } else if (type === 'dozen') {
-      sel = document.getElementById('ru_sel_dz').value;
-    } else if (type === 'column') {
-      sel = document.getElementById('ru_sel_col').value;
-    }
-    return { type, sel };
-  }
-
-  function ru_refreshPotential() {
-    const { type } = ru_readSelection();
-    const stake = parseFloat(document.getElementById('ru_stake').value || '0');
-    const mult = ru_multiplier(type);
-    const potEl = document.getElementById('ru_potential');
-    const wheelLabel = document.getElementById('ru_wheel').value === 'european' ? 'European' : 'American';
-    document.getElementById('ru_wheelLabel').textContent = wheelLabel;
-
-    if (stake > 0 && mult > 0) potEl.textContent = fmtEUR(stake * mult);
-    else potEl.textContent = '—';
-  }
-
-  function ru_addToSlip() {
-    const { type, sel } = ru_readSelection();
-    const stake = parseFloat(document.getElementById('ru_stake').value || '0');
-    if (!stake || stake <= 0) {
-      alert('Enter a valid stake > 0.');
-      return;
-    }
-    if (stake > state.balance) {
-      alert('Insufficient balance for this stake.');
-      return;
-    }
-    const bet = { type, sel, stake };
-    state.rouletteSlip.push(bet);
-    document.getElementById('ru_stake').value = '';
-    ru_renderSlip();
-    ru_updateTotals();
-  }
-
-  function ru_removeSlipIndex(idx) {
-    state.rouletteSlip.splice(idx, 1);
-    ru_renderSlip();
-    ru_updateTotals();
-  }
-
-  function ru_renderSlip() {
-    const wrap = document.getElementById('ru_slip');
-    wrap.innerHTML = '';
-    if (state.rouletteSlip.length === 0) {
-      wrap.innerHTML = `<div class="mini">No bets in slip.</div>`;
-      return;
-    }
-    state.rouletteSlip.forEach((b, i) => {
-      const desc = ru_betDescription(b);
-      const mult = ru_multiplier(b.type);
-      const ret = b.stake * mult;
-      const row = document.createElement('div');
-      row.className = 'bet-card';
-      row.innerHTML = `
-        <div class="stat-row" style="margin-bottom:8px;">
-          <span>${desc}</span>
-          <span class="inline mini">${mult === 36 ? '35:1' : mult === 3 ? '2:1' : '1:1'}</span>
-        </div>
-        <div class="grid-3" style="margin-top:6px;">
-          <div class="stat-row"><span>Stake</span><strong>${fmtEUR(b.stake)}</strong></div>
-          <div class="stat-row"><span>Potential Return</span><strong>${fmtEUR(ret)}</strong></div>
-          <div class="inline" style="justify-content:flex-end;">
-            <button class="secondary danger" onclick="ru_removeSlipIndex(${i})">Remove</button>
-          </div>
+    // Player hands
+    const pWrap = document.getElementById('bj_playerHandsWrap');
+    pWrap.innerHTML = '';
+    state.bj.hands.forEach((h, i) => {
+      const box = document.createElement('div');
+      box.className = 'bj-hand' + (state.bj.handIndex === i && !h.done ? ' active' : '');
+      const hv = bj_handValue(h.cards);
+      const label = h.isBJ ? 'Blackjack!' : (hv.total > 21 ? 'Bust' : `${hv.total}${hv.soft?' (soft)':''}`);
+      box.innerHTML = `
+        <div class="inline" style="justify-content:space-between; width:100%;">
+          <strong>Hand ${i+1}</strong>
+          <span class="mini">${label}</span>
         </div>
       `;
-      wrap.appendChild(row);
+      const cardsDiv = document.createElement('div');
+      cardsDiv.className = 'cards';
+      h.cards.forEach(c => cardsDiv.appendChild(bj_cardEl(c)));
+      box.appendChild(cardsDiv);
+
+      const stakeRow = document.createElement('div');
+      stakeRow.className = 'stat-row';
+      stakeRow.style.marginTop = '8px';
+      stakeRow.innerHTML = `<span>Stake</span><strong>${fmtEUR(h.stake)}</strong>`;
+      box.appendChild(stakeRow);
+
+      pWrap.appendChild(box);
     });
   }
 
-  function ru_updateTotals() {
-    const total = state.rouletteSlip.reduce((s,b)=>s + b.stake, 0);
-    document.getElementById('ru_totalStake').textContent = fmtEUR(total);
-    if (total > 0) document.getElementById('ru_previewAfter').textContent = fmtEUR(state.balance - total);
-    else document.getElementById('ru_previewAfter').textContent = '—';
+  function bj_setStatus(msg) {
+    document.getElementById('bj_status').textContent = msg;
   }
 
-  function ru_placeAndSpin() {
-    if (state.rouletteSlip.length === 0) {
-      alert('Add at least one bet to your slip.');
+  function bj_setButtons({deal=true, hit=false, stand=false, dbl=false, split=false, ins=false}) {
+    document.getElementById('bj_dealBtn').disabled = !deal;
+    document.getElementById('bj_hitBtn').disabled = !hit;
+    document.getElementById('bj_standBtn').disabled = !stand;
+    document.getElementById('bj_doubleBtn').disabled = !dbl;
+    document.getElementById('bj_splitBtn').disabled = !split;
+    document.getElementById('bj_insBtn').disabled = !ins;
+  }
+
+  function bj_refreshUI() {
+    bj_renderHands();
+    document.getElementById('bj_insurance').textContent = fmtEUR(state.bj.insurance);
+    if (!state.bj.inRound) {
+      bj_setStatus('Waiting for your bet…');
+      bj_setButtons({deal:true});
+      document.getElementById('bj_roundReturn').textContent = '€0.00';
+      document.getElementById('bj_roundNet').textContent = '€0.00';
       return;
     }
-    const totalStake = state.rouletteSlip.reduce((s,b)=>s + b.stake, 0);
-    if (totalStake > state.balance) {
-      alert('Insufficient balance for total stake.');
-      return;
+    // In round: button states depend on current hand
+    const cur = state.bj.hands[state.bj.handIndex];
+    const canDouble = !cur.doubled && cur.cards.length === 2 && state.balance >= cur.stake;
+    const canSplit = cur.cards.length === 2 && cur.cards[0].r === cur.cards[1].r && state.balance >= cur.stake && !cur.splitDone;
+    const dealerUp = state.bj.dealer.cards[0];
+    const offerIns = dealerUp && dealerUp.r && (dealerUp.r === 'A') && state.bj.insurance === 0 && cur.cards.length === 2 && !cur.doubled && !cur.isBJ && state.balance >= (cur.stake/2);
+    bj_setButtons({deal:false, hit:!cur.done, stand:!cur.done, dbl:canDouble && !cur.done, split:canSplit && !cur.done, ins:offerIns});
+  }
+
+  function bj_deal() {
+    if (state.bj.inRound) return;
+    const stake = parseFloat(document.getElementById('bj_stake').value || '0');
+    if (!(stake > 0)) return alert('Enter a valid stake > 0.');
+    if (stake > state.balance) return alert('Insufficient balance for this stake.');
+
+    // Deduct stake
+    state.balance -= stake;
+    state.bj.inRound = true;
+    state.bj.hands = [{ cards: [bj_draw(), bj_draw()], stake, done:false, doubled:false, isSplitAce:false, isBJ:false }];
+    state.bj.handIndex = 0;
+    state.bj.dealer = { cards: [bj_draw(), bj_draw()], holeHidden: true };
+    state.bj.insurance = 0;
+    state.bj.totalStake = stake;
+
+    // Natural check (Blackjack)
+    const playerBJ = bj_isBlackjack(state.bj.hands[0].cards);
+    const dealerUp = state.bj.dealer.cards[0];
+    const dealerUpIsTen = (dealerUp.r === '10' || dealerUp.r === 'J' || dealerUp.r === 'Q' || dealerUp.r === 'K');
+
+    state.bj.hands[0].isBJ = playerBJ;
+
+    // Peek if dealer upcard A or 10
+    if (dealerUp.r === 'A' || dealerUpIsTen) {
+      const dealerBJ = bj_isBlackjack(state.bj.dealer.cards);
+      if (dealerBJ) {
+        // Reveal and settle immediately
+        state.bj.dealer.holeHidden = false;
+        let returned = 0;
+        // Insurance payout if taken
+        if (state.bj.insurance > 0) {
+          returned += state.bj.insurance * 3; // stake + 2:1 profit = total 3x, but we only credit winnings here – so credit 2x then we will add back stake? Simpler: treat insurance as separate bet: pay 2x profit + original insurance amount.
+        }
+        // Compute main outcome
+        if (playerBJ) {
+          // Push
+          returned += stake; // return original stake
+          bj_endRound(returned, 'Dealer Blackjack — Push with player BJ');
+        } else {
+          // Dealer wins, no return of main stake
+          bj_endRound(returned, 'Dealer Blackjack');
+        }
+        updateBalanceUI();
+        return;
+      }
     }
 
-    // Deduct stake upfront
-    state.balance -= totalStake;
-
-    // Spin
-    const symbols = ru_getWheelSymbols();
-    const outcomeSym = symbols[Math.floor(Math.random() * symbols.length)];
-    const outcomeColor = ru_colorOf(outcomeSym);
-
-    // Settle each bet
-    let totalReturn = 0;
-    const betsSettled = state.rouletteSlip.map(b => {
-      const win = ru_isWin(b, outcomeSym);
-      const mult = win ? ru_multiplier(b.type) : 0;
-      const ret = win ? b.stake * mult : 0;
-      totalReturn += ret;
-      return {
-        ...b,
-        win, ret,
-        desc: ru_betDescription(b)
-      };
-    });
-
-    // Credit returns
-    state.balance += totalReturn;
-
-    const spin = {
-      ts: nowStr(),
-      wheel: document.getElementById('ru_wheel').value,
-      outcome: outcomeSym,
-      outcomeDisplay: (outcomeColor === 'red' ? `<span class="rouge">${outcomeSym} (Red)</span>` :
-                        outcomeColor === 'black' ? `<span class="noir">${outcomeSym} (Black)</span>` :
-                        `<span class="vert">${outcomeSym} (Green)</span>`),
-      staked: totalStake,
-      returned: totalReturn,
-      net: totalReturn - totalStake,
-      bets: betsSettled
-    };
-    state.rouletteHistory.unshift(spin);
-
-    // Clear slip
-    state.rouletteSlip = [];
-    ru_renderSlip();
-    ru_updateTotals();
+    // Offer insurance only when dealer upcard Ace
+    bj_setStatus('Your move');
+    bj_refreshUI();
     updateBalanceUI();
-    ru_renderLastResult(spin);
+  }
+
+  function bj_takeInsurance() {
+    const cur = state.bj.hands[state.bj.handIndex];
+    const needed = cur.stake / 2;
+    if (state.bj.insurance > 0) return;
+    if (state.balance < needed) return alert('Not enough balance for insurance.');
+    state.balance -= needed;
+    state.bj.insurance = needed;
+
+    // Immediately peek if not yet peeking (we already peeked on deal, but if we allow insurance post-deal, ensure if dealer had BJ it’s handled)
+    const dealerUp = state.bj.dealer.cards[0];
+    const dealerUpIsTen = (dealerUp.r === '10' || dealerUp.r === 'J' || dealerUp.r === 'Q' || dealerUp.r === 'K');
+    if (dealerUp.r === 'A' || dealerUpIsTen) {
+      const dealerBJ = bj_isBlackjack(state.bj.dealer.cards);
+      if (dealerBJ) {
+        state.bj.dealer.holeHidden = false;
+        // Insurance pays 2:1 profit -> return 3x including insurance stake
+        const insuranceReturn = state.bj.insurance * 3;
+        let returned = insuranceReturn;
+        // Main bet:
+        if (state.bj.hands[0].isBJ) {
+          returned += state.bj.hands[0].stake; // push
+          bj_endRound(returned, 'Dealer Blackjack — Push with player BJ');
+        } else {
+          bj_endRound(returned, 'Dealer Blackjack (insurance paid)');
+        }
+        updateBalanceUI();
+        return;
+      }
+    }
+    bj_setStatus('Insurance placed. Your move.');
+    bj_refreshUI();
+    updateBalanceUI();
+  }
+
+  function bj_hit() {
+    const h = state.bj.hands[state.bj.handIndex];
+    if (h.done) return;
+    h.cards.push(bj_draw());
+    const hv = bj_handValue(h.cards);
+    if (hv.total > 21) {
+      h.done = true;
+      bj_nextHandOrDealer();
+    }
+    bj_refreshUI();
+  }
+
+  function bj_stand() {
+    const h = state.bj.hands[state.bj.handIndex];
+    if (h.done) return;
+    h.done = true;
+    bj_nextHandOrDealer();
+  }
+
+  function bj_double() {
+    const h = state.bj.hands[state.bj.handIndex];
+    if (h.done || h.doubled || h.cards.length !== 2) return;
+    if (state.balance < h.stake) return alert('Not enough balance to double.');
+    // Deduct extra stake
+    state.balance -= h.stake;
+    state.bj.totalStake += h.stake;
+    h.stake *= 2;
+    h.doubled = true;
+    // One card and stand
+    h.cards.push(bj_draw());
+    h.done = true;
+    const hv = bj_handValue(h.cards);
+    if (hv.total > 21) {
+      // bust, continue to next
+    }
+    bj_nextHandOrDealer();
+    bj_refreshUI();
+    updateBalanceUI();
+  }
+
+  function bj_split() {
+    const h = state.bj.hands[state.bj.handIndex];
+    if (h.cards.length !== 2) return;
+    if (h.cards[0].r !== h.cards[1].r) return;
+    if (state.balance < h.stake) return alert('Not enough balance to split.');
+    // One split allowed
+    if (state.bj.hands.length > 1) return alert('Only one split allowed in this demo.');
+
+    state.balance -= h.stake;
+    state.bj.totalStake += h.stake;
+
+    const c1 = h.cards[0], c2 = h.cards[1];
+    const isAce = (c1.r === 'A'); // both same rank
+    // Replace current hand with first
+    h.cards = [c1, bj_draw()];
+    h.isSplitAce = isAce;
+    // New hand
+    const newHand = { cards: [c2, bj_draw()], stake: h.stake, done:false, doubled:false, isSplitAce:isAce, isBJ:false };
+    state.bj.hands.splice(state.bj.handIndex+1, 0, newHand);
+
+    // Special: split aces get one card only (stand)
+    if (h.isSplitAce) h.done = true;
+    if (newHand.isSplitAce) newHand.done = true;
+
+    bj_setStatus('Split performed.');
+    bj_refreshUI();
+    updateBalanceUI();
+  }
+
+  function bj_nextHandOrDealer() {
+    // Move to next unfinished hand
+    const nextIdx = state.bj.hands.findIndex((hh, i) => !hh.done && i > state.bj.handIndex);
+    if (nextIdx !== -1) {
+      state.bj.handIndex = nextIdx;
+      bj_refreshUI();
+      return;
+    }
+    // If any earlier unfinished hand, go there
+    const prevIdx = state.bj.hands.findIndex(hh => !hh.done);
+    if (prevIdx !== -1) {
+      state.bj.handIndex = prevIdx;
+      bj_refreshUI();
+      return;
+    }
+    // All player hands done => Dealer play
+    bj_dealerPlayAndSettle();
+  }
+
+  function bj_dealerPlayAndSettle() {
+    state.bj.dealer.holeHidden = false;
+    // Check if dealer had blackjack when upcard was Ten (we peeked earlier)
+    // Dealer plays: stand on soft 17
+    let dVal = bj_handValue(state.bj.dealer.cards);
+    while (dVal.total < 17 || (dVal.total === 17 && dVal.soft === false ? false : (dVal.total === 17 && dVal.soft && false))) {
+      // Stand on soft 17 => if 17 and soft, stop. Condition above keeps drawing for <17 only.
+      if (dVal.total >= 17) break;
+      state.bj.dealer.cards.push(bj_draw());
+      dVal = bj_handValue(state.bj.dealer.cards);
+    }
+
+    // Settle insurance (if taken and dealer BJ already would have ended, so here insurance loses)
+    let returned = 0;
+    if (state.bj.insurance > 0) {
+      // Dealer did not have blackjack; insurance lost (don't add anything)
+    }
+
+    const dealerTotal = dVal.total;
+    // Settle hands
+    const results = [];
+    state.bj.hands.forEach(h => {
+      const hv = bj_handValue(h.cards);
+      let ret = 0, res = '';
+      if (hv.total > 21) { // player bust
+        res = 'Bust';
+      } else {
+        if (bj_isBlackjack(state.bj.dealer.cards)) {
+          if (h.isBJ) { res = 'Push'; ret = h.stake; }
+          else { res = 'Dealer BJ'; }
+        } else if (h.isBJ) {
+          // Blackjack pays 3:2
+          ret = h.stake * 2.5;
+          res = 'Blackjack (3:2)';
+        } else if (dealerTotal > 21) {
+          ret = h.stake * 2;
+          res = 'Dealer bust — Win';
+        } else {
+          if (hv.total > dealerTotal) { ret = h.stake * 2; res = 'Win'; }
+          else if (hv.total < dealerTotal) { ret = 0; res = 'Lose'; }
+          else { ret = h.stake; res = 'Push'; }
+        }
+        // Note: 21 on split (two cards) is not a blackjack here by rule
+      }
+      returned += ret;
+      results.push({hand:h, ret, res});
+    });
+
+    state.balance += returned;
+
+    // Round summary
+    const dealerStr = bj_handToString(state.bj.dealer.cards) + ` (${dealerTotal})`;
+    const handsStr = state.bj.hands.map(h => {
+      const v = bj_handValue(h.cards).total;
+      const tag = h.isBJ ? 'BJ' : v;
+      return `${bj_handToString(h.cards)} (${tag}) — ${fmtEUR(h.stake)}`;
+    });
+    const summary = results.map((r,i)=>`H${i+1}: ${r.res}${r.ret>0?' '+fmtEUR(r.ret):''}`).join(' | ');
+
+    const roundRec = {
+      ts: nowStr(),
+      staked: state.bj.totalStake + state.bj.insurance, // show total money staked this round
+      returned: returned, // only main bets; insurance either paid earlier or lost now
+      net: returned - state.bj.totalStake - state.bj.insurance,
+      dealerStr, handsStr, summary
+    };
+    state.bj.history.unshift(roundRec);
+
+    // Show on UI
+    document.getElementById('bj_roundReturn').textContent = fmtEUR(returned);
+    document.getElementById('bj_roundNet').textContent = fmtEUR(roundRec.net);
+
+    state.bj.inRound = false;
+    bj_setStatus('Round finished.');
+    bj_refreshUI();
+    updateBalanceUI();
     renderHistory();
   }
 
-  function ru_renderLastResult(spin) {
-    const last = document.getElementById('ru_lastResult');
-    last.innerHTML = `
-      <span>Outcome:</span> ${spin.outcomeDisplay}
-      <span class="mini">• ${spin.ts}</span>
-    `;
-    document.getElementById('ru_lastStaked').textContent = fmtEUR(spin.staked);
-    document.getElementById('ru_lastReturned').textContent = fmtEUR(spin.returned);
-    document.getElementById('ru_lastNet').textContent = fmtEUR(spin.net);
+  function bj_handToString(cards) {
+    return cards.map(c=>`${c.r}${c.s}`).join(' ');
   }
 
   /* ===========================
@@ -1279,13 +1383,12 @@
   updateBalanceUI();
   updateSportsOdds();
   renderOpenBets();
-  renderDeposits();
+  renderCashierTx();
   renderHistory();
-  ru_renderBetSelector();
-  ru_updateTotals();
+  bj_buildShoe();
 
   // Small QoL: update sports preview as user types stake
-  document.getElementById('sportStake').addEventListener('input', updateSportsOdds);
+  document.getElementById('sportStake')?.addEventListener('input', updateSportsOdds);
 </script>
 </body>
 </html>
