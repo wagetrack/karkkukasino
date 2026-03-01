@@ -57,14 +57,7 @@
     padding: 12px 16px;
   }
 
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    font-size: 18px;
-  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.4px; font-size: 18px; }
   .brand-badge {
     width: 30px; height: 30px; border-radius: 10px;
     background: conic-gradient(from 140deg, #22c55e, #0ea5e9);
@@ -123,29 +116,20 @@
   /* Mobile Nav (burger) */
   @media (max-width: 720px){
     .burger { display: inline-flex; align-items:center; gap:6px; }
-    .nav {
-      display: none;
-    }
+    .nav { display: none; }
     .nav.open {
       display: flex;
-      position: absolute;
-      left: 0; right: 0; top: 56px;
+      position: absolute; left: 0; right: 0; top: 56px;
       flex-direction: column; gap: 10px;
       padding: 12px 16px;
       background: rgba(2,6,23,0.95);
       border-bottom: 1px solid rgba(148,163,184,0.15);
     }
-    .header-inner {
-      grid-template-columns: auto 1fr auto;
-    }
+    .header-inner { grid-template-columns: auto 1fr auto; }
   }
 
   /* Layout */
-  .container {
-    max-width: 1000px;
-    margin: 18px auto;
-    padding: 0 16px;
-  }
+  .container { max-width: 1000px; margin: 18px auto; padding: 0 16px; }
 
   .card {
     background: radial-gradient(900px 500px at -10% -20%, #1f2937 0, #0b1022 60%);
@@ -159,78 +143,39 @@
   h1, h2, h3 { margin: 0 0 10px; }
   h1 { font-size: 26px; }
   h2 { font-size: 22px; }
-
   p { color: var(--text-muted); margin: 8px 0 12px; }
 
   label { display: block; margin-top: 10px; font-size: 14px; color: var(--text-muted); }
   input, select {
     width: 100%;
-    padding: 10px 12px;
-    margin-top: 6px;
-    border-radius: 10px;
-    border: 1px solid #2a2f42;
-    background: rgba(15,23,42,0.95);
-    color: white;
-    font-size: 16px;
-    outline: none;
+    padding: 10px 12px; margin-top: 6px;
+    border-radius: 10px; border: 1px solid #2a2f42;
+    background: rgba(15,23,42,0.95); color: white; font-size: 16px; outline: none;
   }
   input::placeholder { color: #64748b; }
 
   button.primary {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    background: linear-gradient(135deg, #22c55e, #0ea5e9);
-    color: white;
-    width: 100%;
-    margin-top: 14px;
+    padding: 12px 18px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer;
+    background: linear-gradient(135deg, #22c55e, #0ea5e9); color: white; width: 100%; margin-top: 14px;
   }
   button.secondary {
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: #111827;
-    color: var(--text-main);
-    cursor: pointer;
+    padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: #111827; color: var(--text-main); cursor: pointer;
   }
-  button.danger {
-    background: #ef4444;
-    color: white;
-    border: none;
-  }
+  button.danger { background: #ef4444; color: white; border: none; }
   button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  @media (max-width: 720px){
-    .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 720px){ .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
   .stat-row {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px;
-    background: rgba(2,6,23,0.55);
+    padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px; background: rgba(2,6,23,0.55);
   }
 
   .inline { display: inline-flex; align-items: center; gap: 8px; }
   .mini { font-size: 13px; color: var(--text-muted); }
-  .tag {
-    display: inline-block;
-    padding: 6px 8px; border-radius: 8px;
-    background: rgba(148,163,184,0.12);
-    border: 1px solid rgba(148,163,184,0.2);
-    font-size: 12px; color: #e5e7eb;
-  }
+  .tag { display: inline-block; padding: 6px 8px; border-radius: 8px; background: rgba(148,163,184,0.12); border: 1px solid rgba(148,163,184,0.2); font-size: 12px; color: #e5e7eb; }
 
   .list { display: grid; gap: 10px; }
   .bet-card { padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(15,23,42,0.7); }
@@ -239,29 +184,15 @@
   .table th { color: #e5e7eb; font-weight: 700; }
   .table tr:last-child td { border-bottom: none; }
 
-  /* Card visuals (Blackjack) */
-  .bj-table {
-    background: radial-gradient(900px 500px at 50% -20%, rgba(34,197,94,0.12), rgba(14,165,233,0.08));
-    border: 1px dashed rgba(148,163,184,0.25);
-    border-radius: 16px;
-    padding: 12px;
-  }
+  /* Blackjack visuals */
+  .bj-table { background: radial-gradient(900px 500px at 50% -20%, rgba(34,197,94,0.12), rgba(14,165,233,0.08)); border: 1px dashed rgba(148,163,184,0.25); border-radius: 16px; padding: 12px; }
   .bj-row { display: grid; gap: 12px; }
-  .bj-hand {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px;
-    background: rgba(15,23,42,0.6);
-  }
+  .bj-hand { border: 1px solid var(--border); border-radius: 12px; padding: 10px; background: rgba(15,23,42,0.6); }
   .bj-hand.active { outline: 2px solid #22c55e; }
   .cards { display: flex; gap: 8px; flex-wrap: wrap; }
   .card-ui {
-    width: 58px; height: 82px; border-radius: 8px;
-    background: #f8fafc; color: #0f172a;
-    display: grid; grid-template-rows: auto 1fr auto;
-    padding: 6px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-    position: relative;
+    width: 58px; height: 82px; border-radius: 8px; background: #f8fafc; color: #0f172a;
+    display: grid; grid-template-rows: auto 1fr auto; padding: 6px; box-shadow: 0 6px 16px rgba(0,0,0,0.35); position: relative;
   }
   .card-ui.red { color: #be123c; }
   .card-rank { font-weight: 800; font-size: 18px; }
@@ -270,13 +201,8 @@
   .card-back {
     width: 58px; height: 82px; border-radius: 8px;
     background: repeating-linear-gradient(45deg, #0ea5e9, #0ea5e9 6px, #0369a1 6px, #0369a1 12px);
-    border: 2px solid #075985;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    border: 2px solid #075985; box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   }
-
-  .bj-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .bj-bad { color: #fecaca; }
-  .bj-good { color: #bbf7d0; }
 </style>
 </head>
 <body>
@@ -314,11 +240,7 @@
     <!-- HOME -->
     <section id="tab_home" class="card">
       <h1>Welcome to KarkkuKasino 👋</h1>
-      <p>
-        Use the <strong>Cashier</strong> to deposit or cash out, place sports bets,
-        play <strong>Blackjack</strong> with a 6‑deck shoe and standard rules,
-        track history, and monitor bonus wagering progress.
-      </p>
+      <p>Use the <strong>Cashier</strong> to deposit or cash out, place sports bets, play <strong>Blackjack</strong>, track history, and monitor bonus wagering. Your data now <strong>persists</strong> across refresh.</p>
       <div class="grid-3">
         <div class="card">
           <h3>Go to Cashier</h3>
@@ -332,7 +254,7 @@
         </div>
         <div class="card">
           <h3>Play Blackjack</h3>
-          <p class="mini">Dealer stands on soft 17 · BJ pays 3:2</p>
+          <p class="mini">6‑deck shoe · S17 · BJ pays 3:2</p>
           <button class="primary" onclick="showTab('blackjack')">Open Blackjack</button>
         </div>
       </div>
@@ -385,7 +307,10 @@
       </div>
 
       <div class="card">
-        <h3>Transactions</h3>
+        <div class="inline" style="justify-content:space-between; width:100%; margin-bottom:8px;">
+          <h3>Transactions</h3>
+          <button class="secondary danger" onclick="clearPersistence()">Clear saved data</button>
+        </div>
         <div id="cashierTxList" class="list">
           <div class="mini">No transactions yet.</div>
         </div>
@@ -562,14 +487,18 @@
     bj: {
       shoe: [],
       inRound: false,
-      hands: [],      // [{cards:[], stake, done, doubled, isSplitAce, isBJ, result, payout}]
+      hands: [],      // [{cards:[], stake, done, doubled, isSplitAce, isBJ}]
       handIndex: 0,
       dealer: { cards: [], holeHidden: true },
       insurance: 0,
       totalStake: 0,
-      lastRound: null, // {ts, staked, returned, net, dealerStr, handsStr[]}
-      history: []      // array of lastRound
+      lastRound: null,
+      history: []      // rounds: {ts, staked, returned, net, dealerStr, handsStr[], summary}
     },
+
+    // Bonus Calculator (DOM snapshot approach)
+    bc_snapshot_html: "",
+    bc_playerId: 0
   };
 
   function fmtEUR(n) {
@@ -586,7 +515,6 @@
     document.getElementById('balanceDisplay').textContent = fmtEUR(state.balance);
     const cBal = document.getElementById('cashierBalance');
     if (cBal) cBal.textContent = fmtEUR(state.balance);
-    // Sports preview
     updateSportsOdds();
   }
 
@@ -628,6 +556,184 @@
   }
 
   /* ===========================
+     Persistence (localStorage + cookie fallback)
+     =========================== */
+  const PERSIST_KEY = 'kk_state_v1';
+  const COOKIE_PREFIX = 'kk_state_v1_';
+  const COOKIE_PARTS_KEY = 'kk_state_parts';
+
+  function storageAvailable() {
+    try {
+      const x = '__kk_test__';
+      localStorage.setItem(x, x);
+      localStorage.removeItem(x);
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  function setCookie(name, value, days=365) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+  }
+  function getCookie(name) {
+    const n = encodeURIComponent(name) + '=';
+    const arr = document.cookie.split(';');
+    for (let c of arr) {
+      c = c.trim();
+      if (c.indexOf(n) === 0) return decodeURIComponent(c.substring(n.length));
+    }
+    return null;
+  }
+  function deleteCookie(name) {
+    document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax`;
+  }
+
+  function persistState() {
+    // Capture bonus calculator DOM snapshot
+    const bc = document.getElementById('bc_players');
+    if (bc) {
+      state.bc_snapshot_html = bc.innerHTML;
+      state.bc_playerId = window.bc_playerId || state.bc_playerId || 0;
+    }
+
+    const data = {
+      balance: state.balance,
+      cashierTx: state.cashierTx,
+      nextBetId: state.nextBetId,
+      openBets: state.openBets,
+      history: state.history,
+      bj: {
+        inRound: state.bj.inRound,
+        hands: state.bj.hands,
+        handIndex: state.bj.handIndex,
+        dealer: state.bj.dealer,
+        insurance: state.bj.insurance,
+        totalStake: state.bj.totalStake,
+        history: state.bj.history
+      },
+      bc_snapshot_html: state.bc_snapshot_html,
+      bc_playerId: state.bc_playerId
+    };
+
+    const json = JSON.stringify(data);
+
+    if (storageAvailable()) {
+      localStorage.setItem(PERSIST_KEY, json);
+      // We also set a small marker cookie so you know cookies are present
+      setCookie('kk_marker','1',365);
+    } else {
+      // Cookie fallback with chunking
+      // Clear previous chunks
+      const prevParts = parseInt(getCookie(COOKIE_PARTS_KEY) || '0', 10);
+      for (let i=0; i<prevParts; i++) deleteCookie(COOKIE_PREFIX + i);
+
+      // Split into ~3500‑char chunks
+      const chunkSize = 3500;
+      const parts = Math.ceil(json.length / chunkSize);
+      for (let i=0; i<parts; i++) {
+        const slice = json.slice(i*chunkSize, (i+1)*chunkSize);
+        setCookie(COOKIE_PREFIX + i, slice, 365);
+      }
+      setCookie(COOKIE_PARTS_KEY, String(parts), 365);
+    }
+  }
+
+  function loadState() {
+    let raw = null;
+    if (storageAvailable()) {
+      raw = localStorage.getItem(PERSIST_KEY);
+    }
+    if (!raw) {
+      // Try cookie chunks
+      const parts = parseInt(getCookie(COOKIE_PARTS_KEY) || '0', 10);
+      if (parts > 0) {
+        let s = '';
+        for (let i=0; i<parts; i++) {
+          const piece = getCookie(COOKIE_PREFIX + i) || '';
+          s += piece;
+        }
+        raw = s || null;
+      }
+    }
+    if (!raw) return;
+
+    try {
+      const data = JSON.parse(raw);
+
+      // Assign safely
+      state.balance   = Number(data.balance || 0);
+      state.cashierTx = Array.isArray(data.cashierTx) ? data.cashierTx : [];
+      state.nextBetId = Number(data.nextBetId || 1);
+      state.openBets  = Array.isArray(data.openBets) ? data.openBets : [];
+      state.history   = Array.isArray(data.history) ? data.history : [];
+
+      if (data.bj) {
+        state.bj.inRound = !!data.bj.inRound;
+        state.bj.hands = Array.isArray(data.bj.hands) ? data.bj.hands : [];
+        state.bj.handIndex = Number(data.bj.handIndex || 0);
+        state.bj.dealer = data.bj.dealer || { cards: [], holeHidden: true };
+        state.bj.insurance = Number(data.bj.insurance || 0);
+        state.bj.totalStake = Number(data.bj.totalStake || 0);
+        state.bj.history = Array.isArray(data.bj.history) ? data.bj.history : [];
+      }
+
+      state.bc_snapshot_html = data.bc_snapshot_html || "";
+      state.bc_playerId = Number(data.bc_playerId || 0);
+
+      // Restore Bonus Calculator DOM snapshot
+      if (state.bc_snapshot_html) {
+        const bc = document.getElementById('bc_players');
+        if (bc) bc.innerHTML = state.bc_snapshot_html;
+        window.bc_playerId = state.bc_playerId;
+      }
+    } catch (e) {
+      console.warn('Failed to parse saved state:', e);
+    }
+  }
+
+  function clearPersistence() {
+    if (!confirm('This will clear saved balance, bets, blackjack, and bonus calculator. Continue?')) return;
+
+    // Clear storage
+    if (storageAvailable()) localStorage.removeItem(PERSIST_KEY);
+    const prevParts = parseInt(getCookie(COOKIE_PARTS_KEY) || '0', 10);
+    for (let i=0; i<prevParts; i++) deleteCookie(COOKIE_PREFIX + i);
+    deleteCookie(COOKIE_PARTS_KEY);
+    deleteCookie('kk_marker');
+
+    // Reset runtime state
+    state.balance = 0;
+    state.cashierTx = [];
+    state.nextBetId = 1;
+    state.openBets = [];
+    state.history = [];
+    state.bj = {
+      shoe: [], inRound:false, hands:[], handIndex:0,
+      dealer:{cards:[], holeHidden:true}, insurance:0, totalStake:0,
+      lastRound:null, history:[]
+    };
+    state.bc_snapshot_html = "";
+    state.bc_playerId = 0;
+
+    // Reset UI
+    updateBalanceUI();
+    renderCashierTx();
+    renderOpenBets();
+    renderHistory();
+    const bc = document.getElementById('bc_players');
+    if (bc) bc.innerHTML = '';
+    window.bc_playerId = 0;
+
+    // Persist cleared
+    persistState();
+  }
+
+  window.addEventListener('beforeunload', persistState);
+
+  /* ===========================
      Cashier
      =========================== */
   function cashierDeposit() {
@@ -639,6 +745,7 @@
     document.getElementById('cashierDepositAmount').value = '';
     updateBalanceUI();
     renderCashierTx();
+    persistState();
   }
 
   function cashierWithdraw() {
@@ -651,6 +758,7 @@
     document.getElementById('cashierWithdrawAmount').value = '';
     updateBalanceUI();
     renderCashierTx();
+    persistState();
   }
 
   function renderCashierTx() {
@@ -660,7 +768,7 @@
       list.innerHTML = `<div class="mini">No transactions yet.</div>`;
       return;
     }
-    state.cashierTx.slice(0, 20).forEach(tx => {
+    state.cashierTx.slice(0, 50).forEach(tx => {
       const row = document.createElement('div');
       row.className = 'stat-row';
       row.innerHTML = `
@@ -693,11 +801,8 @@
     if (!oddsEl || !previewEl) return;
 
     const odds = oddsFromProbability(pct);
-    if (!odds) oddsEl.textContent = '—';
-    else oddsEl.textContent = odds.toFixed(3);
-
-    if (stake > 0) previewEl.textContent = fmtEUR(state.balance - stake);
-    else previewEl.textContent = '—';
+    oddsEl.textContent = odds ? odds.toFixed(3) : '—';
+    previewEl.textContent = stake > 0 ? fmtEUR(state.balance - stake) : '—';
   }
 
   function placeSportsBet() {
@@ -724,6 +829,7 @@
     updateSportsOdds();
     updateBalanceUI();
     renderOpenBets();
+    persistState();
   }
 
   function renderOpenBets() {
@@ -779,6 +885,7 @@
     updateBalanceUI();
     renderOpenBets();
     renderHistory();
+    persistState();
   }
 
   /* ===========================
@@ -788,14 +895,13 @@
   function setHistoryMode(mode) {
     historyMode = mode;
     renderHistory();
+    persistState();
   }
 
   function renderHistory() {
-    // Toggle buttons
     document.getElementById('histBtnSports').classList.toggle('active', historyMode === 'sports');
     document.getElementById('histBtnBlackjack').classList.toggle('active', historyMode === 'blackjack');
 
-    // Toggle sections
     document.getElementById('historySports').style.display = (historyMode === 'sports') ? 'block' : 'none';
     document.getElementById('historyBlackjack').style.display = (historyMode === 'blackjack') ? 'block' : 'none';
 
@@ -853,14 +959,9 @@
   const RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 
   function bj_buildShoe() {
-    // 6-deck shoe
     const shoe = [];
     for (let d=0; d<6; d++) {
-      for (const s of SUITS) {
-        for (const r of RANKS) {
-          shoe.push({ r, s });
-        }
-      }
+      for (const s of SUITS) for (const r of RANKS) shoe.push({ r, s });
     }
     // Shuffle
     for (let i = shoe.length - 1; i > 0; i--) {
@@ -876,41 +977,30 @@
   }
 
   function bj_handValue(cards) {
-    // Aces can be 1 or 11
     let total = 0, aces = 0;
     cards.forEach(c => {
       if (c.r === 'A') { aces++; total += 11; }
       else if (['K','Q','J'].includes(c.r)) total += 10;
       else total += parseInt(c.r,10);
     });
-    while (total > 21 && aces > 0) {
-      total -= 10; aces--;
-    }
-    const soft = cards.some(c=>c.r==='A') && total <= 21 && (cards.reduce((t,c)=>t + (c.r==='A'?11:(['K','Q','J'].includes(c.r)?10:parseInt(c.r,10))),0) !== total);
+    while (total > 21 && aces > 0) { total -= 10; aces--; }
+    const raw = cards.reduce((t,c)=>t + (c.r==='A'?11:(['K','Q','J'].includes(c.r)?10:parseInt(c.r,10))),0);
+    const soft = cards.some(c=>c.r==='A') && total <= 21 && raw !== total;
     return { total, soft };
   }
-
   function bj_isBlackjack(cards) {
     if (cards.length !== 2) return false;
-    const vals = cards.map(c => c.r);
-    const hasAce = vals.includes('A');
-    const hasTenVal = vals.some(v => v==='10' || v==='J' || v==='Q' || v==='K');
+    const hasAce = cards.some(c => c.r === 'A');
+    const hasTenVal = cards.some(c => ['10','J','Q','K'].includes(c.r));
     return hasAce && hasTenVal;
   }
 
   function bj_cardEl(card) {
     const el = document.createElement('div');
-    if (card === 'HIDDEN') {
-      el.className = 'card-back';
-      return el;
-    }
+    if (card === 'HIDDEN') { el.className = 'card-back'; return el; }
     const red = (card.s === '♥' || card.s === '♦');
     el.className = 'card-ui' + (red ? ' red' : '');
-    el.innerHTML = `
-      <div class="card-rank">${card.r}</div>
-      <div class="card-center">${card.s}</div>
-      <div class="card-suit">${card.s}</div>
-    `;
+    el.innerHTML = `<div class="card-rank">${card.r}</div><div class="card-center">${card.s}</div><div class="card-suit">${card.s}</div>`;
     return el;
   }
 
@@ -955,10 +1045,7 @@
     });
   }
 
-  function bj_setStatus(msg) {
-    document.getElementById('bj_status').textContent = msg;
-  }
-
+  function bj_setStatus(msg) { document.getElementById('bj_status').textContent = msg; }
   function bj_setButtons({deal=true, hit=false, stand=false, dbl=false, split=false, ins=false}) {
     document.getElementById('bj_dealBtn').disabled = !deal;
     document.getElementById('bj_hitBtn').disabled = !hit;
@@ -978,12 +1065,11 @@
       document.getElementById('bj_roundNet').textContent = '€0.00';
       return;
     }
-    // In round: button states depend on current hand
     const cur = state.bj.hands[state.bj.handIndex];
     const canDouble = !cur.doubled && cur.cards.length === 2 && state.balance >= cur.stake;
-    const canSplit = cur.cards.length === 2 && cur.cards[0].r === cur.cards[1].r && state.balance >= cur.stake && !cur.splitDone;
+    const canSplit = cur.cards.length === 2 && cur.cards[0].r === cur.cards[1].r && state.balance >= cur.stake && !cur.splitDone && state.bj.hands.length === 1;
     const dealerUp = state.bj.dealer.cards[0];
-    const offerIns = dealerUp && dealerUp.r && (dealerUp.r === 'A') && state.bj.insurance === 0 && cur.cards.length === 2 && !cur.doubled && !cur.isBJ && state.balance >= (cur.stake/2);
+    const offerIns = dealerUp && (dealerUp.r === 'A') && state.bj.insurance === 0 && cur.cards.length === 2 && !cur.doubled && !cur.isBJ && state.balance >= (cur.stake/2);
     bj_setButtons({deal:false, hit:!cur.done, stand:!cur.done, dbl:canDouble && !cur.done, split:canSplit && !cur.done, ins:offerIns});
   }
 
@@ -993,7 +1079,6 @@
     if (!(stake > 0)) return alert('Enter a valid stake > 0.');
     if (stake > state.balance) return alert('Insufficient balance for this stake.');
 
-    // Deduct stake
     state.balance -= stake;
     state.bj.inRound = true;
     state.bj.hands = [{ cards: [bj_draw(), bj_draw()], stake, done:false, doubled:false, isSplitAce:false, isBJ:false }];
@@ -1002,42 +1087,35 @@
     state.bj.insurance = 0;
     state.bj.totalStake = stake;
 
-    // Natural check (Blackjack)
+    // Natural check
     const playerBJ = bj_isBlackjack(state.bj.hands[0].cards);
     const dealerUp = state.bj.dealer.cards[0];
-    const dealerUpIsTen = (dealerUp.r === '10' || dealerUp.r === 'J' || dealerUp.r === 'Q' || dealerUp.r === 'K');
-
+    const dealerUpIsTen = ['10','J','Q','K'].includes(dealerUp.r);
     state.bj.hands[0].isBJ = playerBJ;
 
-    // Peek if dealer upcard A or 10
     if (dealerUp.r === 'A' || dealerUpIsTen) {
       const dealerBJ = bj_isBlackjack(state.bj.dealer.cards);
       if (dealerBJ) {
-        // Reveal and settle immediately
         state.bj.dealer.holeHidden = false;
         let returned = 0;
-        // Insurance payout if taken
-        if (state.bj.insurance > 0) {
-          returned += state.bj.insurance * 3; // stake + 2:1 profit = total 3x, but we only credit winnings here – so credit 2x then we will add back stake? Simpler: treat insurance as separate bet: pay 2x profit + original insurance amount.
-        }
-        // Compute main outcome
+        // If insurance was somehow placed pre-peek (not in our flow), pay it here:
+        if (state.bj.insurance > 0) returned += state.bj.insurance * 3;
         if (playerBJ) {
-          // Push
-          returned += stake; // return original stake
-          bj_endRound(returned, 'Dealer Blackjack — Push with player BJ');
+          returned += stake; // push
+          bj_endRoundDirect(returned, 'Dealer Blackjack — Push with player BJ');
         } else {
-          // Dealer wins, no return of main stake
-          bj_endRound(returned, 'Dealer Blackjack');
+          bj_endRoundDirect(returned, 'Dealer Blackjack');
         }
         updateBalanceUI();
+        persistState();
         return;
       }
     }
 
-    // Offer insurance only when dealer upcard Ace
     bj_setStatus('Your move');
     bj_refreshUI();
     updateBalanceUI();
+    persistState();
   }
 
   function bj_takeInsurance() {
@@ -1048,171 +1126,139 @@
     state.balance -= needed;
     state.bj.insurance = needed;
 
-    // Immediately peek if not yet peeking (we already peeked on deal, but if we allow insurance post-deal, ensure if dealer had BJ it’s handled)
     const dealerUp = state.bj.dealer.cards[0];
-    const dealerUpIsTen = (dealerUp.r === '10' || dealerUp.r === 'J' || dealerUp.r === 'Q' || dealerUp.r === 'K');
+    const dealerUpIsTen = ['10','J','Q','K'].includes(dealerUp.r);
     if (dealerUp.r === 'A' || dealerUpIsTen) {
       const dealerBJ = bj_isBlackjack(state.bj.dealer.cards);
       if (dealerBJ) {
         state.bj.dealer.holeHidden = false;
-        // Insurance pays 2:1 profit -> return 3x including insurance stake
-        const insuranceReturn = state.bj.insurance * 3;
+        const insuranceReturn = state.bj.insurance * 3; // stake + 2:1 profit
         let returned = insuranceReturn;
-        // Main bet:
         if (state.bj.hands[0].isBJ) {
-          returned += state.bj.hands[0].stake; // push
-          bj_endRound(returned, 'Dealer Blackjack — Push with player BJ');
+          returned += state.bj.hands[0].stake; // push main
+          bj_endRoundDirect(returned, 'Dealer Blackjack — Push with player BJ');
         } else {
-          bj_endRound(returned, 'Dealer Blackjack (insurance paid)');
+          bj_endRoundDirect(returned, 'Dealer Blackjack (insurance paid)');
         }
         updateBalanceUI();
+        persistState();
         return;
       }
     }
     bj_setStatus('Insurance placed. Your move.');
     bj_refreshUI();
     updateBalanceUI();
+    persistState();
   }
 
   function bj_hit() {
     const h = state.bj.hands[state.bj.handIndex];
-    if (h.done) return;
+    if (!state.bj.inRound || h.done) return;
     h.cards.push(bj_draw());
     const hv = bj_handValue(h.cards);
-    if (hv.total > 21) {
-      h.done = true;
-      bj_nextHandOrDealer();
-    }
+    if (hv.total > 21) { h.done = true; bj_nextHandOrDealer(); }
     bj_refreshUI();
+    persistState();
   }
 
   function bj_stand() {
     const h = state.bj.hands[state.bj.handIndex];
-    if (h.done) return;
+    if (!state.bj.inRound || h.done) return;
     h.done = true;
     bj_nextHandOrDealer();
+    persistState();
   }
 
   function bj_double() {
     const h = state.bj.hands[state.bj.handIndex];
-    if (h.done || h.doubled || h.cards.length !== 2) return;
+    if (!state.bj.inRound || h.done || h.doubled || h.cards.length !== 2) return;
     if (state.balance < h.stake) return alert('Not enough balance to double.');
-    // Deduct extra stake
     state.balance -= h.stake;
     state.bj.totalStake += h.stake;
     h.stake *= 2;
     h.doubled = true;
-    // One card and stand
     h.cards.push(bj_draw());
     h.done = true;
-    const hv = bj_handValue(h.cards);
-    if (hv.total > 21) {
-      // bust, continue to next
-    }
     bj_nextHandOrDealer();
-    bj_refreshUI();
     updateBalanceUI();
+    persistState();
   }
 
   function bj_split() {
     const h = state.bj.hands[state.bj.handIndex];
-    if (h.cards.length !== 2) return;
+    if (!state.bj.inRound || h.cards.length !== 2) return;
     if (h.cards[0].r !== h.cards[1].r) return;
     if (state.balance < h.stake) return alert('Not enough balance to split.');
-    // One split allowed
     if (state.bj.hands.length > 1) return alert('Only one split allowed in this demo.');
 
     state.balance -= h.stake;
     state.bj.totalStake += h.stake;
 
     const c1 = h.cards[0], c2 = h.cards[1];
-    const isAce = (c1.r === 'A'); // both same rank
-    // Replace current hand with first
+    const isAce = (c1.r === 'A');
     h.cards = [c1, bj_draw()];
     h.isSplitAce = isAce;
-    // New hand
     const newHand = { cards: [c2, bj_draw()], stake: h.stake, done:false, doubled:false, isSplitAce:isAce, isBJ:false };
     state.bj.hands.splice(state.bj.handIndex+1, 0, newHand);
 
-    // Special: split aces get one card only (stand)
     if (h.isSplitAce) h.done = true;
     if (newHand.isSplitAce) newHand.done = true;
 
     bj_setStatus('Split performed.');
     bj_refreshUI();
     updateBalanceUI();
+    persistState();
   }
 
   function bj_nextHandOrDealer() {
-    // Move to next unfinished hand
     const nextIdx = state.bj.hands.findIndex((hh, i) => !hh.done && i > state.bj.handIndex);
-    if (nextIdx !== -1) {
-      state.bj.handIndex = nextIdx;
-      bj_refreshUI();
-      return;
-    }
-    // If any earlier unfinished hand, go there
+    if (nextIdx !== -1) { state.bj.handIndex = nextIdx; bj_refreshUI(); return; }
     const prevIdx = state.bj.hands.findIndex(hh => !hh.done);
-    if (prevIdx !== -1) {
-      state.bj.handIndex = prevIdx;
-      bj_refreshUI();
-      return;
-    }
-    // All player hands done => Dealer play
+    if (prevIdx !== -1) { state.bj.handIndex = prevIdx; bj_refreshUI(); return; }
     bj_dealerPlayAndSettle();
   }
 
   function bj_dealerPlayAndSettle() {
     state.bj.dealer.holeHidden = false;
-    // Check if dealer had blackjack when upcard was Ten (we peeked earlier)
-    // Dealer plays: stand on soft 17
     let dVal = bj_handValue(state.bj.dealer.cards);
-    while (dVal.total < 17 || (dVal.total === 17 && dVal.soft === false ? false : (dVal.total === 17 && dVal.soft && false))) {
-      // Stand on soft 17 => if 17 and soft, stop. Condition above keeps drawing for <17 only.
-      if (dVal.total >= 17) break;
+    // Dealer stands on soft 17
+    while (dVal.total < 17) {
       state.bj.dealer.cards.push(bj_draw());
       dVal = bj_handValue(state.bj.dealer.cards);
     }
 
-    // Settle insurance (if taken and dealer BJ already would have ended, so here insurance loses)
     let returned = 0;
-    if (state.bj.insurance > 0) {
-      // Dealer did not have blackjack; insurance lost (don't add anything)
-    }
 
     const dealerTotal = dVal.total;
-    // Settle hands
+    const dealerBJ = bj_isBlackjack(state.bj.dealer.cards);
+
     const results = [];
     state.bj.hands.forEach(h => {
       const hv = bj_handValue(h.cards);
       let ret = 0, res = '';
-      if (hv.total > 21) { // player bust
+      if (hv.total > 21) {
         res = 'Bust';
       } else {
-        if (bj_isBlackjack(state.bj.dealer.cards)) {
+        if (dealerBJ) {
           if (h.isBJ) { res = 'Push'; ret = h.stake; }
           else { res = 'Dealer BJ'; }
         } else if (h.isBJ) {
-          // Blackjack pays 3:2
-          ret = h.stake * 2.5;
-          res = 'Blackjack (3:2)';
+          ret = h.stake * 2.5; res = 'Blackjack (3:2)';
         } else if (dealerTotal > 21) {
-          ret = h.stake * 2;
-          res = 'Dealer bust — Win';
+          ret = h.stake * 2; res = 'Dealer bust — Win';
         } else {
           if (hv.total > dealerTotal) { ret = h.stake * 2; res = 'Win'; }
-          else if (hv.total < dealerTotal) { ret = 0; res = 'Lose'; }
+          else if (hv.total < dealerTotal) { res = 'Lose'; }
           else { ret = h.stake; res = 'Push'; }
         }
-        // Note: 21 on split (two cards) is not a blackjack here by rule
       }
       returned += ret;
       results.push({hand:h, ret, res});
     });
 
+    // Insurance loses here if dealer didn't have BJ
     state.balance += returned;
 
-    // Round summary
     const dealerStr = bj_handToString(state.bj.dealer.cards) + ` (${dealerTotal})`;
     const handsStr = state.bj.hands.map(h => {
       const v = bj_handValue(h.cards).total;
@@ -1223,14 +1269,13 @@
 
     const roundRec = {
       ts: nowStr(),
-      staked: state.bj.totalStake + state.bj.insurance, // show total money staked this round
-      returned: returned, // only main bets; insurance either paid earlier or lost now
+      staked: state.bj.totalStake + state.bj.insurance,
+      returned: returned,
       net: returned - state.bj.totalStake - state.bj.insurance,
       dealerStr, handsStr, summary
     };
     state.bj.history.unshift(roundRec);
 
-    // Show on UI
     document.getElementById('bj_roundReturn').textContent = fmtEUR(returned);
     document.getElementById('bj_roundNet').textContent = fmtEUR(roundRec.net);
 
@@ -1239,15 +1284,37 @@
     bj_refreshUI();
     updateBalanceUI();
     renderHistory();
+    persistState();
   }
 
-  function bj_handToString(cards) {
-    return cards.map(c=>`${c.r}${c.s}`).join(' ');
+  function bj_endRoundDirect(returned, text) {
+    state.balance += returned;
+    const dealerStr = bj_handToString(state.bj.dealer.cards) + ` (${bj_handValue(state.bj.dealer.cards).total})`;
+    const handsStr = state.bj.hands.map(h => {
+      const v = bj_handValue(h.cards).total;
+      const tag = h.isBJ ? 'BJ' : v;
+      return `${bj_handToString(h.cards)} (${tag}) — ${fmtEUR(h.stake)}`;
+    });
+    const roundRec = {
+      ts: nowStr(),
+      staked: state.bj.totalStake + state.bj.insurance,
+      returned: returned,
+      net: returned - state.bj.totalStake - state.bj.insurance,
+      dealerStr, handsStr, summary: text
+    };
+    state.bj.history.unshift(roundRec);
+    document.getElementById('bj_roundReturn').textContent = fmtEUR(returned);
+    document.getElementById('bj_roundNet').textContent = fmtEUR(roundRec.net);
+    state.bj.inRound = false;
+    bj_setStatus('Round finished.');
+    bj_refreshUI();
+    renderHistory();
   }
+
+  function bj_handToString(cards) { return cards.map(c=>`${c.r}${c.s}`).join(' '); }
 
   /* ===========================
-     BONUS CALCULATOR (scoped)
-     Prefix: bc_
+     BONUS CALCULATOR (original, DOM snapshot persistence)
      =========================== */
   let bc_playerId = 0;
 
@@ -1317,6 +1384,7 @@
       </div>
     `;
     container.prepend(div);
+    persistState();
   }
 
   function bc_submitStats(id) {
@@ -1339,11 +1407,14 @@
     document.getElementById("bc_deposit_" + id).disabled = true;
     document.getElementById("bc_bonus_" + id).disabled = true;
     document.getElementById("bc_wager_" + id).disabled = true;
+
+    persistState();
   }
 
   function bc_toggleBetInput(id) {
     const box = document.getElementById("bc_betInput_" + id);
     box.style.display = box.style.display === "block" ? "none" : "block";
+    persistState();
   }
 
   function bc_applyBet(id) {
@@ -1361,6 +1432,7 @@
 
     bc_updateProgress(id);
     document.getElementById("bc_bet_" + id).value = "";
+    persistState();
   }
 
   function bc_updateProgress(id) {
@@ -1375,19 +1447,29 @@
   function bc_removePlayer(id) {
     const el = document.getElementById("bc_player_" + id);
     if (el) el.remove();
+    persistState();
   }
 
   /* ===========================
-     Init
+     Init (Load → Render)
      =========================== */
-  updateBalanceUI();
-  updateSportsOdds();
-  renderOpenBets();
-  renderCashierTx();
-  renderHistory();
-  bj_buildShoe();
+  // Restore saved state (if any)
+  loadState();
 
-  // Small QoL: update sports preview as user types stake
+  // If Blackjack has an in-progress round, rebuild shoe so play can continue
+  if (state.bj.shoe.length === 0) bj_buildShoe();
+
+  // Restore global UI
+  updateBalanceUI();
+  renderCashierTx();
+  renderOpenBets();
+  renderHistory();
+  bj_refreshUI();
+
+  // Set bc_playerId from saved snapshot
+  if (state.bc_playerId) window.bc_playerId = state.bc_playerId;
+
+  // QoL: sports stake preview as user types
   document.getElementById('sportStake')?.addEventListener('input', updateSportsOdds);
 </script>
 </body>
