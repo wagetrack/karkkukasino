@@ -36,6 +36,7 @@
   }
 
   a { color: inherit; text-decoration: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
   /* Header / Navbar */
   .app-header {
@@ -50,7 +51,7 @@
     max-width: 1100px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 12px;
     padding: 12px 16px;
@@ -64,11 +65,21 @@
     letter-spacing: 0.4px;
     font-size: 18px;
   }
-
   .brand-badge {
     width: 30px; height: 30px; border-radius: 10px;
     background: conic-gradient(from 140deg, #22c55e, #0ea5e9);
     box-shadow: 0 8px 20px rgba(34,197,94,0.25);
+  }
+
+  .burger {
+    display: none;
+    background: #0b1220;
+    border: 1px solid var(--border);
+    color: #e5e7eb;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 16px;
+    cursor: pointer;
   }
 
   .nav {
@@ -107,6 +118,26 @@
   }
   .balance-pill .dot {
     width: 8px; height: 8px; border-radius: 99px; background: #10b981; box-shadow: 0 0 12px #10b981;
+  }
+
+  /* Mobile Nav (burger) */
+  @media (max-width: 720px){
+    .burger { display: inline-flex; align-items:center; gap:6px; }
+    .nav {
+      display: none;
+    }
+    .nav.open {
+      display: flex;
+      position: absolute;
+      left: 0; right: 0; top: 56px;
+      flex-direction: column; gap: 10px;
+      padding: 12px 16px;
+      background: rgba(2,6,23,0.95);
+      border-bottom: 1px solid rgba(148,163,184,0.15);
+    }
+    .header-inner {
+      grid-template-columns: auto 1fr auto;
+    }
   }
 
   /* Layout */
@@ -183,8 +214,6 @@
   }
   @media (max-width: 720px){
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    .header-inner { grid-template-columns: 1fr; }
-    .balance-pill { justify-self: start; }
   }
 
   .stat-row {
@@ -209,10 +238,7 @@
     font-size: 12px; color: #e5e7eb;
   }
 
-  .list {
-    display: grid; gap: 10px;
-  }
-
+  .list { display: grid; gap: 10px; }
   .bet-card {
     padding: 12px;
     border-radius: 12px;
@@ -220,9 +246,7 @@
     background: rgba(15,23,42,0.7);
   }
 
-  .table {
-    width: 100%; border-collapse: collapse; font-size: 14px;
-  }
+  .table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .table th, .table td {
     padding: 10px; border-bottom: 1px solid rgba(148,163,184,0.15);
     text-align: left;
@@ -238,31 +262,46 @@
     height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #0ea5e9);
     border-radius: 5px; transition: width 0.3s ease;
   }
+
+  /* Roulette visual pill */
+  .roulette-result {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border);
+    background: rgba(15,23,42,0.7); font-weight: 700;
+  }
+  .rouge { color: #fecaca; } /* light red text */
+  .noir { color: #c7d2fe; }  /* light indigo text */
+  .vert { color: #bbf7d0; }  /* light green text */
 </style>
 </head>
 <body>
 
-  <!-- Header with nav & balance -->
+  <!-- Header with burger, nav & balance -->
   <header class="app-header">
     <div class="header-inner">
+      <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav" onclick="toggleMenu()">
+        ☰ <span class="sr-only">Menu</span>
+      </button>
+
       <div class="brand">
         <span class="brand-badge" aria-hidden="true"></span>
         <span>KarkkuKasino</span>
       </div>
-
-      <nav class="nav" aria-label="Main">
-        <button class="active" data-tab="home" onclick="showTab('home')">Home</button>
-        <button data-tab="deposit" onclick="showTab('deposit')">Deposit</button>
-        <button data-tab="sports" onclick="showTab('sports')">Sports</button>
-        <button data-tab="history" onclick="showTab('history')">Bet History</button>
-        <button data-tab="bonus" onclick="showTab('bonus')">Bonus Calculator</button>
-      </nav>
 
       <div class="balance-pill" aria-live="polite">
         <span class="dot"></span>
         Balance: <span id="balanceDisplay">€0.00</span>
       </div>
     </div>
+
+    <nav id="mainNav" class="nav" aria-label="Main">
+      <button class="active" data-tab="home" onclick="showTab('home')">Home</button>
+      <button data-tab="deposit" onclick="showTab('deposit')">Deposit</button>
+      <button data-tab="sports" onclick="showTab('sports')">Sports</button>
+      <button data-tab="roulette" onclick="showTab('roulette')">Roulette</button>
+      <button data-tab="history" onclick="showTab('history')">Bet History</button>
+      <button data-tab="bonus" onclick="showTab('bonus')">Bonus Calculator</button>
+    </nav>
   </header>
 
   <main class="container">
@@ -271,8 +310,8 @@
     <section id="tab_home" class="card">
       <h1>Welcome to KarkkuKasino 👋</h1>
       <p>
-        Manage your balance, deposit funds, place sports bets with a 97% RTP odds model,
-        track your bet history, and use the bonus wagering calculator—all in one place.
+        Manage your balance, deposit funds, place sports bets (97% RTP model), play Roulette with
+        standard odds and house edge, track bet history, and use the bonus wagering calculator—all in one place.
       </p>
       <div class="grid-3">
         <div class="card">
@@ -281,14 +320,14 @@
           <button class="primary" onclick="showTab('deposit')">Go to Deposit</button>
         </div>
         <div class="card">
-          <h3>Place a Sports Bet</h3>
+          <h3>Sports Betting</h3>
           <p class="mini">Enter an outcome probability — odds are set at 97% RTP</p>
           <button class="primary" onclick="showTab('sports')">Go to Sports</button>
         </div>
         <div class="card">
-          <h3>Track Bonuses</h3>
-          <p class="mini">Use the wagering progress calculator to stay on target</p>
-          <button class="primary" onclick="showTab('bonus')">Open Bonus Calculator</button>
+          <h3>Play Roulette</h3>
+          <p class="mini">European or American rules with standard payouts</p>
+          <button class="primary" onclick="showTab('roulette')">Open Roulette</button>
         </div>
       </div>
     </section>
@@ -365,13 +404,85 @@
       </div>
     </section>
 
+    <!-- ROULETTE -->
+    <section id="tab_roulette" class="card" style="display:none;">
+      <h2>Roulette</h2>
+      <p>Play European (single 0) or American (0 & 00) roulette with standard payouts.
+        Add multiple bets to your slip, then spin the wheel.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <label for="ru_wheel">Wheel Type</label>
+          <select id="ru_wheel" onchange="ru_refreshPotential()">
+            <option value="european">European (single 0)</option>
+            <option value="american">American (0 & 00)</option>
+          </select>
+
+          <label for="ru_betType">Bet Type</label>
+          <select id="ru_betType" onchange="ru_renderBetSelector()">
+            <option value="straight">Straight (single number) — 35:1</option>
+            <option value="redblack">Red / Black — 1:1</option>
+            <option value="evenodd">Even / Odd — 1:1</option>
+            <option value="lowhigh">Low (1–18) / High (19–36) — 1:1</option>
+            <option value="dozen">Dozen (1–12 / 13–24 / 25–36) — 2:1</option>
+            <option value="column">Column (1 / 2 / 3) — 2:1</option>
+          </select>
+
+          <div id="ru_selector" style="margin-top:8px;"></div>
+
+          <label for="ru_stake" style="margin-top:12px;">Stake (€)</label>
+          <input id="ru_stake" type="number" min="0.01" step="0.01" placeholder="0.00" oninput="ru_refreshPotential()"/>
+
+          <div class="stat-row" style="margin-top:10px;">
+            <span>Potential Return (if win)</span>
+            <strong id="ru_potential">—</strong>
+          </div>
+
+          <button class="primary" onclick="ru_addToSlip()">Add to Slip</button>
+        </div>
+
+        <div class="card" style="grid-column: span 2;">
+          <h3>Bet Slip</h3>
+          <div id="ru_slip" class="list">
+            <div class="mini">No bets in slip.</div>
+          </div>
+
+          <div class="grid-3" style="margin-top:10px;">
+            <div class="stat-row"><span>Total Stake This Spin</span><strong id="ru_totalStake">€0.00</strong></div>
+            <div class="stat-row"><span>Wheel</span><strong id="ru_wheelLabel">European</strong></div>
+            <div class="stat-row"><span>Balance after stake</span><strong id="ru_previewAfter">—</strong></div>
+          </div>
+
+          <button class="primary" style="margin-top:12px;" onclick="ru_placeAndSpin()">Place Bets & Spin</button>
+
+          <div class="card" style="margin-top:12px;">
+            <h3>Last Result</h3>
+            <div id="ru_lastResult" class="roulette-result">
+              <span class="mini">No spins yet.</span>
+            </div>
+            <div class="grid-3" style="margin-top:10px;">
+              <div class="stat-row"><span>Staked</span><strong id="ru_lastStaked">€0.00</strong></div>
+              <div class="stat-row"><span>Returned</span><strong id="ru_lastReturned">€0.00</strong></div>
+              <div class="stat-row"><span>Net</span><strong id="ru_lastNet">€0.00</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- HISTORY -->
     <section id="tab_history" class="card" style="display:none;">
       <h2>Bet History</h2>
-      <div class="card">
+
+      <div class="inline" style="gap:8px; margin-bottom:10px;">
+        <button class="secondary" id="histBtnSports" onclick="setHistoryMode('sports')">Sports</button>
+        <button class="secondary" id="histBtnRoulette" onclick="setHistoryMode('roulette')">Roulette</button>
+      </div>
+
+      <div id="historySports" class="card">
         <div style="overflow-x:auto;">
-          <table class="table" aria-describedby="historyCaption">
-            <caption id="historyCaption" class="sr-only">All settled bets</caption>
+          <table class="table" aria-describedby="historyCaptionSports">
+            <caption id="historyCaptionSports" class="sr-only">All settled sports bets</caption>
             <thead>
               <tr>
                 <th>Time</th>
@@ -382,8 +493,30 @@
                 <th>Payout (€)</th>
               </tr>
             </thead>
-            <tbody id="historyRows">
-              <tr><td colspan="6" class="mini">No settled bets yet.</td></tr>
+            <tbody id="historyRowsSports">
+              <tr><td colspan="6" class="mini">No settled sports bets yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="historyRoulette" class="card" style="display:none;">
+        <div style="overflow-x:auto;">
+          <table class="table" aria-describedby="historyCaptionRoulette">
+            <caption id="historyCaptionRoulette" class="sr-only">Roulette spins</caption>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Wheel</th>
+                <th>Outcome</th>
+                <th>Staked (€)</th>
+                <th>Returned (€)</th>
+                <th>Net (€)</th>
+                <th>Bets</th>
+              </tr>
+            </thead>
+            <tbody id="historyRowsRoulette">
+              <tr><td colspan="7" class="mini">No roulette spins yet.</td></tr>
             </tbody>
           </table>
         </div>
@@ -408,9 +541,17 @@
   const state = {
     balance: 0,
     nextBetId: 1,
+
+    // Sports
     openBets: [],     // {id, prob, odds, stake, potential, ts}
-    history: [],      // {id, prob, odds, stake, result, payout, ts}
-    deposits: []      // {method, amount, ts}
+    history: [],      // SPORTS settled: {id, prob, odds, stake, result, payout, ts}
+
+    // Deposits
+    deposits: [],     // {method, amount, ts}
+
+    // Roulette
+    rouletteSlip: [], // pending bets for next spin: {type, sel, stake}
+    rouletteHistory: [], // spins: {ts, wheel, outcome, staked, returned, net, bets:[{type, sel, stake, win, ret}]}
   };
 
   function fmtEUR(n) {
@@ -418,10 +559,8 @@
     const val = Math.abs(n).toFixed(2);
     return `${sign}€${val}`;
   }
-
   function nowStr() {
     const d = new Date();
-    // Local date/time display
     return d.toLocaleString();
   }
 
@@ -429,18 +568,46 @@
     document.getElementById('balanceDisplay').textContent = fmtEUR(state.balance);
     const depBal = document.getElementById('depositBalance');
     if (depBal) depBal.textContent = fmtEUR(state.balance);
+
+    // roulette preview
+    ru_updateTotals();
+  }
+
+  function setActiveNav(tabName) {
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tab === tabName);
+    });
+  }
+
+  function closeMenuIfOpen() {
+    const nav = document.getElementById('mainNav');
+    if (nav.classList.contains('open')) {
+      nav.classList.remove('open');
+      const b = document.getElementById('burgerBtn');
+      b.setAttribute('aria-expanded','false');
+    }
   }
 
   function showTab(name) {
-    const tabs = ['home','deposit','sports','history','bonus'];
+    const tabs = ['home','deposit','sports','roulette','history','bonus'];
     tabs.forEach(t => {
       document.getElementById('tab_' + t).style.display = (t === name) ? 'block' : 'none';
-      const btn = document.querySelector(`.nav button[data-tab="${t}"]`);
-      if (btn) btn.classList.toggle('active', t === name);
     });
-    // When navigating to history/deposit, refresh lists
+    setActiveNav(name);
+    closeMenuIfOpen();
+
     if (name === 'history') renderHistory();
     if (name === 'deposit') renderDeposits();
+    if (name === 'roulette') {
+      ru_renderBetSelector();
+      ru_updateTotals();
+    }
+  }
+
+  function toggleMenu() {
+    const nav = document.getElementById('mainNav');
+    const expanded = nav.classList.toggle('open');
+    document.getElementById('burgerBtn').setAttribute('aria-expanded', expanded ? 'true' : 'false');
   }
 
   /* ===========================
@@ -501,18 +668,11 @@
     const previewEl = document.getElementById('previewBalance');
 
     const odds = oddsFromProbability(pct);
-    if (!odds) {
-      oddsEl.textContent = '—';
-    } else {
-      oddsEl.textContent = odds.toFixed(3);
-    }
+    if (!odds) oddsEl.textContent = '—';
+    else oddsEl.textContent = odds.toFixed(3);
 
-    if (stake > 0) {
-      const preview = state.balance - stake;
-      previewEl.textContent = fmtEUR(preview);
-    } else {
-      previewEl.textContent = '—';
-    }
+    if (stake > 0) previewEl.textContent = fmtEUR(state.balance - stake);
+    else previewEl.textContent = '—';
   }
 
   function placeSportsBet() {
@@ -533,7 +693,6 @@
       return;
     }
 
-    // Deduct stake, create open bet
     state.balance -= stake;
     const bet = {
       id: state.nextBetId++,
@@ -545,7 +704,6 @@
     };
     state.openBets.unshift(bet);
 
-    // Reset stake input but keep probability (often reused)
     document.getElementById('sportStake').value = "";
     updateSportsOdds();
     updateBalanceUI();
@@ -595,18 +753,11 @@
     if (result === 'won') {
       payout = bet.potential;
       state.balance += payout;
-    } else {
-      payout = 0;
     }
 
     state.history.unshift({
-      id: bet.id,
-      prob: bet.prob,
-      odds: bet.odds,
-      stake: bet.stake,
-      result: result,
-      payout: payout,
-      ts: bet.ts
+      id: bet.id, prob: bet.prob, odds: bet.odds,
+      stake: bet.stake, result, payout, ts: bet.ts
     });
 
     updateBalanceUI();
@@ -614,27 +765,380 @@
     renderHistory();
   }
 
+  /* ===========================
+     History (Sports / Roulette)
+     =========================== */
+  let historyMode = 'sports';
+  function setHistoryMode(mode) {
+    historyMode = mode;
+    renderHistory();
+  }
+
   function renderHistory() {
-    const tbody = document.getElementById('historyRows');
-    tbody.innerHTML = "";
-    if (state.history.length === 0) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan="6" class="mini">No settled bets yet.</td>`;
-      tbody.appendChild(tr);
+    // Toggle buttons
+    document.getElementById('histBtnSports').classList.toggle('active', historyMode === 'sports');
+    document.getElementById('histBtnRoulette').classList.toggle('active', historyMode === 'roulette');
+
+    // Toggle sections
+    document.getElementById('historySports').style.display = (historyMode === 'sports') ? 'block' : 'none';
+    document.getElementById('historyRoulette').style.display = (historyMode === 'roulette') ? 'block' : 'none';
+
+    if (historyMode === 'sports') {
+      const tbody = document.getElementById('historyRowsSports');
+      tbody.innerHTML = "";
+      if (state.history.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="6" class="mini">No settled sports bets yet.</td>`;
+        tbody.appendChild(tr);
+        return;
+      }
+      state.history.forEach(h => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${h.ts}</td>
+          <td>${h.prob.toFixed(2)}%</td>
+          <td>${h.odds.toFixed(3)}</td>
+          <td>${h.stake.toFixed(2)}</td>
+          <td>${h.result.toUpperCase()}</td>
+          <td>${h.payout.toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } else {
+      const tbody = document.getElementById('historyRowsRoulette');
+      tbody.innerHTML = "";
+      if (state.rouletteHistory.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="7" class="mini">No roulette spins yet.</td>`;
+        tbody.appendChild(tr);
+        return;
+      }
+      state.rouletteHistory.forEach(s => {
+        // Bets summary string
+        const betsStr = s.bets.map(b => {
+          const winTag = b.win ? '✅' : '❌';
+          return `${winTag} ${b.desc} — ${fmtEUR(b.stake)}${b.win ? ' → '+fmtEUR(b.ret) : ''}`;
+        }).join('<br/>');
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${s.ts}</td>
+          <td>${s.wheel === 'european' ? 'European' : 'American'}</td>
+          <td>${s.outcomeDisplay}</td>
+          <td>${s.staked.toFixed(2)}</td>
+          <td>${s.returned.toFixed(2)}</td>
+          <td>${s.net.toFixed(2)}</td>
+          <td>${betsStr}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  }
+
+  /* ===========================
+     Roulette
+     =========================== */
+  const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+
+  function ru_getWheelSymbols() {
+    const wheel = document.getElementById('ru_wheel').value;
+    if (wheel === 'american') {
+      // Strings for 0 and 00; numbers 1-36
+      return ['0','00', ...Array.from({length:36}, (_,i)=>String(i+1))];
+    } else {
+      return ['0', ...Array.from({length:36}, (_,i)=>String(i+1))];
+    }
+  }
+
+  function ru_colorOf(sym) {
+    if (sym === '0' || sym === '00') return 'green';
+    const n = parseInt(sym, 10);
+    if (REDS.has(n)) return 'red';
+    return 'black';
+  }
+
+  // Payout multiplier (total return / stake) if bet wins; 0 if loses.
+  function ru_multiplier(type) {
+    switch(type) {
+      case 'straight': return 36; // 35:1 => total 36x
+      case 'redblack':
+      case 'evenodd':
+      case 'lowhigh': return 2;   // 1:1
+      case 'dozen':
+      case 'column' : return 3;   // 2:1
+      default: return 0;
+    }
+  }
+
+  function ru_betDescription(bet) {
+    switch (bet.type) {
+      case 'straight': return `Straight on ${bet.sel}`;
+      case 'redblack': return `Color ${bet.sel.toUpperCase()}`;
+      case 'evenodd': return (bet.sel === 'even' ? 'Even' : 'Odd');
+      case 'lowhigh': return (bet.sel === 'low' ? 'Low (1–18)' : 'High (19–36)');
+      case 'dozen': return `Dozen ${bet.sel === '1' ? '1–12' : bet.sel === '2' ? '13–24' : '25–36'}`;
+      case 'column': return `Column ${bet.sel}`;
+      default: return 'Bet';
+    }
+  }
+
+  function ru_isWin(bet, outcomeSym) {
+    const color = ru_colorOf(outcomeSym);
+    if (bet.type === 'straight') {
+      return bet.sel === outcomeSym;
+    }
+    if (outcomeSym === '0' || outcomeSym === '00') {
+      return false; // zero(s) lose on these bet types
+    }
+    const n = parseInt(outcomeSym, 10);
+
+    switch (bet.type) {
+      case 'redblack':
+        return (bet.sel === 'red' && color === 'red') ||
+               (bet.sel === 'black' && color === 'black');
+      case 'evenodd':
+        return (bet.sel === 'even' && n % 2 === 0) ||
+               (bet.sel === 'odd' && n % 2 === 1);
+      case 'lowhigh':
+        return (bet.sel === 'low' && n >= 1 && n <= 18) ||
+               (bet.sel === 'high' && n >= 19 && n <= 36);
+      case 'dozen':
+        if (bet.sel === '1') return n >= 1 && n <= 12;
+        if (bet.sel === '2') return n >= 13 && n <= 24;
+        if (bet.sel === '3') return n >= 25 && n <= 36;
+        return false;
+      case 'column':
+        // Column 1: n%3==1, Column 2: n%3==2, Column 3: n%3==0
+        if (bet.sel === '1') return n % 3 === 1;
+        if (bet.sel === '2') return n % 3 === 2;
+        if (bet.sel === '3') return n % 3 === 0;
+        return false;
+      default:
+        return false;
+    }
+  }
+
+  function ru_renderBetSelector() {
+    const type = document.getElementById('ru_betType').value;
+    const selBox = document.getElementById('ru_selector');
+    const wheel = document.getElementById('ru_wheel').value;
+    let html = '';
+
+    if (type === 'straight') {
+      const symbols = ru_getWheelSymbols();
+      html = `
+        <label for="ru_sel_straight">Number</label>
+        <select id="ru_sel_straight">
+          ${symbols.map(s => `<option value="${s}">${s}</option>`).join('')}
+        </select>
+      `;
+    } else if (type === 'redblack') {
+      html = `
+        <label for="ru_sel_rb">Color</label>
+        <select id="ru_sel_rb">
+          <option value="red">Red</option>
+          <option value="black">Black</option>
+        </select>
+      `;
+    } else if (type === 'evenodd') {
+      html = `
+        <label for="ru_sel_eo">Parity</label>
+        <select id="ru_sel_eo">
+          <option value="even">Even</option>
+          <option value="odd">Odd</option>
+        </select>
+      `;
+    } else if (type === 'lowhigh') {
+      html = `
+        <label for="ru_sel_lh">Range</label>
+        <select id="ru_sel_lh">
+          <option value="low">Low (1–18)</option>
+          <option value="high">High (19–36)</option>
+        </select>
+      `;
+    } else if (type === 'dozen') {
+      html = `
+        <label for="ru_sel_dz">Dozen</label>
+        <select id="ru_sel_dz">
+          <option value="1">1st Dozen (1–12)</option>
+          <option value="2">2nd Dozen (13–24)</option>
+          <option value="3">3rd Dozen (25–36)</option>
+        </select>
+      `;
+    } else if (type === 'column') {
+      html = `
+        <label for="ru_sel_col">Column</label>
+        <select id="ru_sel_col">
+          <option value="1">Column 1</option>
+          <option value="2">Column 2</option>
+          <option value="3">Column 3</option>
+        </select>
+      `;
+    }
+    selBox.innerHTML = html;
+    ru_refreshPotential();
+  }
+
+  function ru_readSelection() {
+    const type = document.getElementById('ru_betType').value;
+    let sel = null;
+    if (type === 'straight') {
+      sel = document.getElementById('ru_sel_straight').value;
+    } else if (type === 'redblack') {
+      sel = document.getElementById('ru_sel_rb').value;
+    } else if (type === 'evenodd') {
+      sel = document.getElementById('ru_sel_eo').value;
+    } else if (type === 'lowhigh') {
+      sel = document.getElementById('ru_sel_lh').value;
+    } else if (type === 'dozen') {
+      sel = document.getElementById('ru_sel_dz').value;
+    } else if (type === 'column') {
+      sel = document.getElementById('ru_sel_col').value;
+    }
+    return { type, sel };
+  }
+
+  function ru_refreshPotential() {
+    const { type } = ru_readSelection();
+    const stake = parseFloat(document.getElementById('ru_stake').value || '0');
+    const mult = ru_multiplier(type);
+    const potEl = document.getElementById('ru_potential');
+    const wheelLabel = document.getElementById('ru_wheel').value === 'european' ? 'European' : 'American';
+    document.getElementById('ru_wheelLabel').textContent = wheelLabel;
+
+    if (stake > 0 && mult > 0) potEl.textContent = fmtEUR(stake * mult);
+    else potEl.textContent = '—';
+  }
+
+  function ru_addToSlip() {
+    const { type, sel } = ru_readSelection();
+    const stake = parseFloat(document.getElementById('ru_stake').value || '0');
+    if (!stake || stake <= 0) {
+      alert('Enter a valid stake > 0.');
       return;
     }
-    state.history.forEach(h => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${h.ts}</td>
-        <td>${h.prob.toFixed(2)}%</td>
-        <td>${h.odds.toFixed(3)}</td>
-        <td>${h.stake.toFixed(2)}</td>
-        <td>${h.result.toUpperCase()}</td>
-        <td>${h.payout.toFixed(2)}</td>
+    if (stake > state.balance) {
+      alert('Insufficient balance for this stake.');
+      return;
+    }
+    const bet = { type, sel, stake };
+    state.rouletteSlip.push(bet);
+    document.getElementById('ru_stake').value = '';
+    ru_renderSlip();
+    ru_updateTotals();
+  }
+
+  function ru_removeSlipIndex(idx) {
+    state.rouletteSlip.splice(idx, 1);
+    ru_renderSlip();
+    ru_updateTotals();
+  }
+
+  function ru_renderSlip() {
+    const wrap = document.getElementById('ru_slip');
+    wrap.innerHTML = '';
+    if (state.rouletteSlip.length === 0) {
+      wrap.innerHTML = `<div class="mini">No bets in slip.</div>`;
+      return;
+    }
+    state.rouletteSlip.forEach((b, i) => {
+      const desc = ru_betDescription(b);
+      const mult = ru_multiplier(b.type);
+      const ret = b.stake * mult;
+      const row = document.createElement('div');
+      row.className = 'bet-card';
+      row.innerHTML = `
+        <div class="stat-row" style="margin-bottom:8px;">
+          <span>${desc}</span>
+          <span class="inline mini">${mult === 36 ? '35:1' : mult === 3 ? '2:1' : '1:1'}</span>
+        </div>
+        <div class="grid-3" style="margin-top:6px;">
+          <div class="stat-row"><span>Stake</span><strong>${fmtEUR(b.stake)}</strong></div>
+          <div class="stat-row"><span>Potential Return</span><strong>${fmtEUR(ret)}</strong></div>
+          <div class="inline" style="justify-content:flex-end;">
+            <button class="secondary danger" onclick="ru_removeSlipIndex(${i})">Remove</button>
+          </div>
+        </div>
       `;
-      tbody.appendChild(tr);
+      wrap.appendChild(row);
     });
+  }
+
+  function ru_updateTotals() {
+    const total = state.rouletteSlip.reduce((s,b)=>s + b.stake, 0);
+    document.getElementById('ru_totalStake').textContent = fmtEUR(total);
+    if (total > 0) document.getElementById('ru_previewAfter').textContent = fmtEUR(state.balance - total);
+    else document.getElementById('ru_previewAfter').textContent = '—';
+  }
+
+  function ru_placeAndSpin() {
+    if (state.rouletteSlip.length === 0) {
+      alert('Add at least one bet to your slip.');
+      return;
+    }
+    const totalStake = state.rouletteSlip.reduce((s,b)=>s + b.stake, 0);
+    if (totalStake > state.balance) {
+      alert('Insufficient balance for total stake.');
+      return;
+    }
+
+    // Deduct stake upfront
+    state.balance -= totalStake;
+
+    // Spin
+    const symbols = ru_getWheelSymbols();
+    const outcomeSym = symbols[Math.floor(Math.random() * symbols.length)];
+    const outcomeColor = ru_colorOf(outcomeSym);
+
+    // Settle each bet
+    let totalReturn = 0;
+    const betsSettled = state.rouletteSlip.map(b => {
+      const win = ru_isWin(b, outcomeSym);
+      const mult = win ? ru_multiplier(b.type) : 0;
+      const ret = win ? b.stake * mult : 0;
+      totalReturn += ret;
+      return {
+        ...b,
+        win, ret,
+        desc: ru_betDescription(b)
+      };
+    });
+
+    // Credit returns
+    state.balance += totalReturn;
+
+    const spin = {
+      ts: nowStr(),
+      wheel: document.getElementById('ru_wheel').value,
+      outcome: outcomeSym,
+      outcomeDisplay: (outcomeColor === 'red' ? `<span class="rouge">${outcomeSym} (Red)</span>` :
+                        outcomeColor === 'black' ? `<span class="noir">${outcomeSym} (Black)</span>` :
+                        `<span class="vert">${outcomeSym} (Green)</span>`),
+      staked: totalStake,
+      returned: totalReturn,
+      net: totalReturn - totalStake,
+      bets: betsSettled
+    };
+    state.rouletteHistory.unshift(spin);
+
+    // Clear slip
+    state.rouletteSlip = [];
+    ru_renderSlip();
+    ru_updateTotals();
+    updateBalanceUI();
+    ru_renderLastResult(spin);
+    renderHistory();
+  }
+
+  function ru_renderLastResult(spin) {
+    const last = document.getElementById('ru_lastResult');
+    last.innerHTML = `
+      <span>Outcome:</span> ${spin.outcomeDisplay}
+      <span class="mini">• ${spin.ts}</span>
+    `;
+    document.getElementById('ru_lastStaked').textContent = fmtEUR(spin.staked);
+    document.getElementById('ru_lastReturned').textContent = fmtEUR(spin.returned);
+    document.getElementById('ru_lastNet').textContent = fmtEUR(spin.net);
   }
 
   /* ===========================
@@ -746,7 +1250,6 @@
     let wagered = parseFloat(document.getElementById("bc_wagered_" + id).innerText);
 
     wagered += bet;
-
     const remaining = Math.max(required - wagered, 0);
 
     document.getElementById("bc_wagered_" + id).innerText = wagered.toFixed(2);
@@ -776,10 +1279,12 @@
   updateBalanceUI();
   updateSportsOdds();
   renderOpenBets();
-  renderHistory();
   renderDeposits();
+  renderHistory();
+  ru_renderBetSelector();
+  ru_updateTotals();
 
-  // Small QoL: update preview as user types stake
+  // Small QoL: update sports preview as user types stake
   document.getElementById('sportStake').addEventListener('input', updateSportsOdds);
 </script>
 </body>
