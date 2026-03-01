@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>KarkkuKasino</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+  :root{
+    --bg: #050816;
+    --bg2: #0b1022;
+    --card-bg: #111827;
+    --accent: #10b981;
+    --accent-2: #0ea5e9;
+    --accent-soft: rgba(16,185,129,0.15);
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --border: #1f2937;
+    --shadow: 0 18px 40px rgba(0,0,0,0.45);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #1f2937 0, #020617 60%, #000 100%);
+    color: var(--text-main);
+    padding: 0 0 56px;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* Header / Navbar */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    background: linear-gradient(180deg, rgba(2,6,23,0.92), rgba(2,6,23,0.72));
+    border-bottom: 1px solid rgba(148,163,184,0.15);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    font-size: 18px;
+  }
+
+  .brand-badge {
+    width: 30px; height: 30px; border-radius: 10px;
+    background: conic-gradient(from 140deg, #22c55e, #0ea5e9);
+    box-shadow: 0 8px 20px rgba(34,197,94,0.25);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav button {
+    background: #0b1220;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .nav button:hover { border-color: #334155; }
+  .nav button.active {
+    background: linear-gradient(135deg, #22c55e, #0ea5e9);
+    border: none; color: white; box-shadow: 0 8px 28px rgba(14,165,233,0.25);
+  }
+
+  .balance-pill {
+    justify-self: end;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.35);
+    color: #d1fae5;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .balance-pill .dot {
+    width: 8px; height: 8px; border-radius: 99px; background: #10b981; box-shadow: 0 0 12px #10b981;
+  }
+
+  /* Layout */
+  .container {
+    max-width: 1000px;
+    margin: 18px auto;
+    padding: 0 16px;
+  }
+
+  .card {
+    background: radial-gradient(900px 500px at -10% -20%, #1f2937 0, #0b1022 60%);
+    border: 1px solid rgba(148,163,184,0.18);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+
+  h1, h2, h3 { margin: 0 0 10px; }
+  h1 { font-size: 26px; }
+  h2 { font-size: 22px; }
+
+  p { color: var(--text-muted); margin: 8px 0 12px; }
+
+  label { display: block; margin-top: 10px; font-size: 14px; color: var(--text-muted); }
+  input, select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #2a2f42;
+    background: rgba(15,23,42,0.95);
+    color: white;
+    font-size: 16px;
+    outline: none;
+  }
+  input::placeholder { color: #64748b; }
+
+  button.primary {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #22c55e, #0ea5e9);
+    color: white;
+    width: 100%;
+    margin-top: 14px;
+  }
+  button.secondary {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #111827;
+    color: var(--text-main);
+    cursor: pointer;
+  }
+  button.danger {
+    background: #ef4444;
+    color: white;
+    border: none;
+  }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 720px){
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .header-inner { grid-template-columns: 1fr; }
+    .balance-pill { justify-self: start; }
+  }
+
+  .stat-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px;
+    background: rgba(2,6,23,0.55);
+  }
+
+  .inline {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .mini {
+    font-size: 13px; color: var(--text-muted);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 6px 8px; border-radius: 8px;
+    background: rgba(148,163,184,0.12);
+    border: 1px solid rgba(148,163,184,0.2);
+    font-size: 12px; color: #e5e7eb;
+  }
+
+  .list {
+    display: grid; gap: 10px;
+  }
+
+  .bet-card {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(15,23,42,0.7);
+  }
+
+  .table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+  }
+  .table th, .table td {
+    padding: 10px; border-bottom: 1px solid rgba(148,163,184,0.15);
+    text-align: left;
+  }
+  .table th { color: #e5e7eb; font-weight: 700; }
+  .table tr:last-child td { border-bottom: none; }
+
+  /* Progress bar for Bonus tab */
+  .progress-bar {
+    width: 100%; height: 10px; background: #333; border-radius: 5px; margin-top: 10px;
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #0ea5e9);
+    border-radius: 5px; transition: width 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header with nav & balance -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>KarkkuKasino</span>
+      </div>
+
+      <nav class="nav" aria-label="Main">
+        <button class="active" data-tab="home" onclick="showTab('home')">Home</button>
+        <button data-tab="deposit" onclick="showTab('deposit')">Deposit</button>
+        <button data-tab="sports" onclick="showTab('sports')">Sports</button>
+        <button data-tab="history" onclick="showTab('history')">Bet History</button>
+        <button data-tab="bonus" onclick="showTab('bonus')">Bonus Calculator</button>
+      </nav>
+
+      <div class="balance-pill" aria-live="polite">
+        <span class="dot"></span>
+        Balance: <span id="balanceDisplay">€0.00</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HOME -->
+    <section id="tab_home" class="card">
+      <h1>Welcome to KarkkuKasino 👋</h1>
+      <p>
+        Manage your balance, deposit funds, place sports bets with a 97% RTP odds model,
+        track your bet history, and use the bonus wagering calculator—all in one place.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Start by Depositing</h3>
+          <p class="mini">Card · Cash · MobilePay · Crypto</p>
+          <button class="primary" onclick="showTab('deposit')">Go to Deposit</button>
+        </div>
+        <div class="card">
+          <h3>Place a Sports Bet</h3>
+          <p class="mini">Enter an outcome probability — odds are set at 97% RTP</p>
+          <button class="primary" onclick="showTab('sports')">Go to Sports</button>
+        </div>
+        <div class="card">
+          <h3>Track Bonuses</h3>
+          <p class="mini">Use the wagering progress calculator to stay on target</p>
+          <button class="primary" onclick="showTab('bonus')">Open Bonus Calculator</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPOSIT -->
+    <section id="tab_deposit" class="card" style="display:none;">
+      <h2>Deposit</h2>
+      <p>Choose a method and amount. This will update your global balance.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <label for="depositMethod">Method</label>
+          <select id="depositMethod">
+            <option value="card">Card</option>
+            <option value="cash">Cash</option>
+            <option value="mobilepay">MobilePay</option>
+            <option value="crypto">Crypto</option>
+          </select>
+
+          <label for="depositAmount">Amount (€)</label>
+          <input id="depositAmount" type="number" min="0" step="0.01" placeholder="0.00" />
+
+          <button class="primary" onclick="handleDeposit()">Deposit</button>
+
+          <div class="stat-row" style="margin-top:12px;">
+            <span>Current Balance</span>
+            <strong id="depositBalance">€0.00</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recent Deposits</h3>
+          <div id="depositList" class="list">
+            <div class="mini">No deposits yet.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPORTS -->
+    <section id="tab_sports" class="card" style="display:none;">
+      <h2>Sports</h2>
+      <p>Enter your estimated probability for an outcome. Odds are priced at 97% RTP:
+        <span class="tag">odds = 0.97 / (probability / 100)</span>
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <label for="sportProbability">Outcome Probability (%)</label>
+          <input id="sportProbability" type="number" inputmode="decimal" min="0.01" max="99.99" step="0.01" placeholder="e.g., 55" oninput="updateSportsOdds()" />
+
+          <div class="stat-row" style="margin-top:12px;">
+            <span>Offered Odds (Decimal)</span>
+            <strong id="sportOdds">—</strong>
+          </div>
+
+          <label for="sportStake" style="margin-top:14px;">Stake (€)</label>
+          <input id="sportStake" type="number" min="0" step="0.01" placeholder="0.00" />
+
+          <button class="primary" onclick="placeSportsBet()">Place Bet</button>
+
+          <div class="stat-row" style="margin-top:12px;">
+            <span>Balance after stake</span>
+            <strong id="previewBalance">—</strong>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column: span 2;">
+          <h3>Open Bets</h3>
+          <div id="openBets" class="list">
+            <div class="mini">No open bets yet.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="tab_history" class="card" style="display:none;">
+      <h2>Bet History</h2>
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="table" aria-describedby="historyCaption">
+            <caption id="historyCaption" class="sr-only">All settled bets</caption>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Prob %</th>
+                <th>Odds</th>
+                <th>Stake (€)</th>
+                <th>Result</th>
+                <th>Payout (€)</th>
+              </tr>
+            </thead>
+            <tbody id="historyRows">
+              <tr><td colspan="6" class="mini">No settled bets yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- BONUS CALCULATOR -->
+    <section id="tab_bonus" class="card" style="display:none;">
+      <h2>Bonus Calculator</h2>
+      <p>Track wagering requirements across multiple entries.</p>
+      <button class="secondary" onclick="bc_addPlayer()">➕ New Entry</button>
+
+      <div id="bc_players" style="margin-top:12px;"></div>
+    </section>
+
+  </main>
+
+<script>
+  /* ===========================
+     Global App State & Utils
+     =========================== */
+  const state = {
+    balance: 0,
+    nextBetId: 1,
+    openBets: [],     // {id, prob, odds, stake, potential, ts}
+    history: [],      // {id, prob, odds, stake, result, payout, ts}
+    deposits: []      // {method, amount, ts}
+  };
+
+  function fmtEUR(n) {
+    const sign = n < 0 ? "-" : "";
+    const val = Math.abs(n).toFixed(2);
+    return `${sign}€${val}`;
+  }
+
+  function nowStr() {
+    const d = new Date();
+    // Local date/time display
+    return d.toLocaleString();
+  }
+
+  function updateBalanceUI() {
+    document.getElementById('balanceDisplay').textContent = fmtEUR(state.balance);
+    const depBal = document.getElementById('depositBalance');
+    if (depBal) depBal.textContent = fmtEUR(state.balance);
+  }
+
+  function showTab(name) {
+    const tabs = ['home','deposit','sports','history','bonus'];
+    tabs.forEach(t => {
+      document.getElementById('tab_' + t).style.display = (t === name) ? 'block' : 'none';
+      const btn = document.querySelector(`.nav button[data-tab="${t}"]`);
+      if (btn) btn.classList.toggle('active', t === name);
+    });
+    // When navigating to history/deposit, refresh lists
+    if (name === 'history') renderHistory();
+    if (name === 'deposit') renderDeposits();
+  }
+
+  /* ===========================
+     Deposit
+     =========================== */
+  function handleDeposit() {
+    const method = document.getElementById('depositMethod').value;
+    const amount = parseFloat(document.getElementById('depositAmount').value || "0");
+
+    if (!(amount > 0)) {
+      alert("Please enter a valid deposit amount > 0.");
+      return;
+    }
+
+    state.balance += amount;
+    state.deposits.unshift({ method, amount, ts: nowStr() });
+
+    document.getElementById('depositAmount').value = "";
+    updateBalanceUI();
+    renderDeposits();
+  }
+
+  function renderDeposits() {
+    const list = document.getElementById('depositList');
+    list.innerHTML = "";
+    if (state.deposits.length === 0) {
+      list.innerHTML = `<div class="mini">No deposits yet.</div>`;
+      return;
+    }
+    state.deposits.slice(0, 10).forEach(dep => {
+      const row = document.createElement('div');
+      row.className = 'stat-row';
+      row.innerHTML = `
+        <span class="inline">
+          <span class="tag" style="text-transform:capitalize;">${dep.method}</span>
+          <span class="mini">${dep.ts}</span>
+        </span>
+        <strong>${fmtEUR(dep.amount)}</strong>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  /* ===========================
+     Sports
+     =========================== */
+  function oddsFromProbability(pct) {
+    const p = pct / 100;
+    if (p <= 0 || p >= 1) return null;
+    // 97% RTP odds: E[return] = p * odds = 0.97  => odds = 0.97 / p
+    return 0.97 / p;
+  }
+
+  function updateSportsOdds() {
+    const pct = parseFloat(document.getElementById('sportProbability').value || "0");
+    const stake = parseFloat(document.getElementById('sportStake').value || "0");
+    const oddsEl = document.getElementById('sportOdds');
+    const previewEl = document.getElementById('previewBalance');
+
+    const odds = oddsFromProbability(pct);
+    if (!odds) {
+      oddsEl.textContent = '—';
+    } else {
+      oddsEl.textContent = odds.toFixed(3);
+    }
+
+    if (stake > 0) {
+      const preview = state.balance - stake;
+      previewEl.textContent = fmtEUR(preview);
+    } else {
+      previewEl.textContent = '—';
+    }
+  }
+
+  function placeSportsBet() {
+    const pct = parseFloat(document.getElementById('sportProbability').value || "0");
+    const stake = parseFloat(document.getElementById('sportStake').value || "0");
+    const odds = oddsFromProbability(pct);
+
+    if (!odds || !(pct > 0 && pct < 100)) {
+      alert("Enter a valid probability between 0 and 100 (exclusive).");
+      return;
+    }
+    if (!(stake > 0)) {
+      alert("Enter a valid stake > 0.");
+      return;
+    }
+    if (stake > state.balance) {
+      alert("Insufficient balance for this stake.");
+      return;
+    }
+
+    // Deduct stake, create open bet
+    state.balance -= stake;
+    const bet = {
+      id: state.nextBetId++,
+      prob: pct,
+      odds: odds,
+      stake: stake,
+      potential: stake * odds,
+      ts: nowStr()
+    };
+    state.openBets.unshift(bet);
+
+    // Reset stake input but keep probability (often reused)
+    document.getElementById('sportStake').value = "";
+    updateSportsOdds();
+    updateBalanceUI();
+    renderOpenBets();
+  }
+
+  function renderOpenBets() {
+    const wrap = document.getElementById('openBets');
+    wrap.innerHTML = "";
+    if (state.openBets.length === 0) {
+      wrap.innerHTML = `<div class="mini">No open bets yet.</div>`;
+      return;
+    }
+    state.openBets.forEach(b => {
+      const div = document.createElement('div');
+      div.className = 'bet-card';
+      div.innerHTML = `
+        <div class="stat-row" style="margin-bottom:8px;">
+          <span class="mini">${b.ts}</span>
+          <span class="tag">ID #${b.id}</span>
+        </div>
+        <div class="grid-3" style="margin-top:6px;">
+          <div class="stat-row"><span>Prob</span><strong>${b.prob.toFixed(2)}%</strong></div>
+          <div class="stat-row"><span>Odds</span><strong>${b.odds.toFixed(3)}</strong></div>
+          <div class="stat-row"><span>Stake</span><strong>${fmtEUR(b.stake)}</strong></div>
+        </div>
+        <div class="stat-row" style="margin-top:8px;">
+          <span>Potential Return</span><strong>${fmtEUR(b.potential)}</strong>
+        </div>
+        <div class="inline" style="gap:8px; margin-top:10px;">
+          <button class="secondary" onclick="settleBet(${b.id}, 'won')">Won</button>
+          <button class="secondary danger" onclick="settleBet(${b.id}, 'lost')">Lost</button>
+        </div>
+      `;
+      wrap.appendChild(div);
+    });
+  }
+
+  function settleBet(betId, result) {
+    const idx = state.openBets.findIndex(b => b.id === betId);
+    if (idx === -1) return;
+
+    const bet = state.openBets[idx];
+    state.openBets.splice(idx, 1);
+
+    let payout = 0;
+    if (result === 'won') {
+      payout = bet.potential;
+      state.balance += payout;
+    } else {
+      payout = 0;
+    }
+
+    state.history.unshift({
+      id: bet.id,
+      prob: bet.prob,
+      odds: bet.odds,
+      stake: bet.stake,
+      result: result,
+      payout: payout,
+      ts: bet.ts
+    });
+
+    updateBalanceUI();
+    renderOpenBets();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const tbody = document.getElementById('historyRows');
+    tbody.innerHTML = "";
+    if (state.history.length === 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td colspan="6" class="mini">No settled bets yet.</td>`;
+      tbody.appendChild(tr);
+      return;
+    }
+    state.history.forEach(h => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${h.ts}</td>
+        <td>${h.prob.toFixed(2)}%</td>
+        <td>${h.odds.toFixed(3)}</td>
+        <td>${h.stake.toFixed(2)}</td>
+        <td>${h.result.toUpperCase()}</td>
+        <td>${h.payout.toFixed(2)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ===========================
+     BONUS CALCULATOR (scoped)
+     Prefix: bc_
+     =========================== */
+  let bc_playerId = 0;
+
+  function bc_addPlayer() {
+    bc_playerId++;
+    const id = bc_playerId;
+    const container = document.getElementById('bc_players');
+
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.id = `bc_player_${id}`;
+    div.innerHTML = `
+      <input 
+        id="bc_name_${id}" 
+        value="Entry #${id}" 
+        style="
+          width: 100%;
+          font-size: 18px;
+          font-weight: bold;
+          background: transparent;
+          border: none;
+          color: white;
+          margin-bottom: 6px;
+          outline: none;
+        ">
+
+      <div class="grid-3">
+        <div>
+          <label>Deposit (€)</label>
+          <input type="number" id="bc_deposit_${id}" min="0" step="0.01">
+        </div>
+        <div>
+          <label>Bonus (€)</label>
+          <input type="number" id="bc_bonus_${id}" min="0" step="0.01">
+        </div>
+        <div>
+          <label>Wagering Requirement (x)</label>
+          <input type="number" id="bc_wager_${id}" min="1" step="1">
+        </div>
+      </div>
+
+      <button class="primary" onclick="bc_submitStats(${id})" style="margin-top:10px;">Submit Stats</button>
+
+      <div class="card" style="margin-top:10px;">
+        <p>Required Wager: <strong><span id="bc_required_${id}">0.00</span> €</strong></p>
+        <p>Total Wagered: <strong><span id="bc_wagered_${id}">0.00</span> €</strong></p>
+        <p>Remaining: <strong><span id="bc_remaining_${id}">0.00</span> €</strong></p>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="bc_progress_${id}"></div>
+        </div>
+        <p id="bc_progressLabel_${id}" class="mini">0% complete</p>
+      </div>
+
+      <div class="grid-3" style="margin-top:6px;">
+        <div>
+          <button id="bc_addBetBtn_${id}" class="secondary" onclick="bc_toggleBetInput(${id})" disabled>Add Bet</button>
+        </div>
+        <div id="bc_betInput_${id}" style="display:none;">
+          <label>Bet Amount (€)</label>
+          <input type="number" id="bc_bet_${id}" min="0" step="0.01">
+          <button class="secondary" style="margin-top:6px;" onclick="bc_applyBet(${id})">Apply Bet</button>
+        </div>
+        <div>
+          <button class="secondary danger" onclick="bc_removePlayer(${id})">Remove Entry</button>
+        </div>
+      </div>
+    `;
+    container.prepend(div);
+  }
+
+  function bc_submitStats(id) {
+    const deposit = parseFloat(document.getElementById("bc_deposit_" + id).value) || 0;
+    const bonus   = parseFloat(document.getElementById("bc_bonus_" + id).value) || 0;
+    const wager   = parseFloat(document.getElementById("bc_wager_" + id).value) || 0;
+
+    if (deposit <= 0 || wager <= 0) {
+      alert("Please enter valid deposit and wagering multiplier.");
+      return;
+    }
+
+    const required = (deposit + bonus) * wager;
+    document.getElementById("bc_required_" + id).innerText = required.toFixed(2);
+    document.getElementById("bc_wagered_" + id).innerText = "0.00";
+    document.getElementById("bc_remaining_" + id).innerText = required.toFixed(2);
+    bc_updateProgress(id);
+
+    document.getElementById("bc_addBetBtn_" + id).disabled = false;
+    document.getElementById("bc_deposit_" + id).disabled = true;
+    document.getElementById("bc_bonus_" + id).disabled = true;
+    document.getElementById("bc_wager_" + id).disabled = true;
+  }
+
+  function bc_toggleBetInput(id) {
+    const box = document.getElementById("bc_betInput_" + id);
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  }
+
+  function bc_applyBet(id) {
+    const bet = parseFloat(document.getElementById("bc_bet_" + id).value) || 0;
+    if (bet <= 0) return;
+
+    const required = parseFloat(document.getElementById("bc_required_" + id).innerText);
+    let wagered = parseFloat(document.getElementById("bc_wagered_" + id).innerText);
+
+    wagered += bet;
+
+    const remaining = Math.max(required - wagered, 0);
+
+    document.getElementById("bc_wagered_" + id).innerText = wagered.toFixed(2);
+    document.getElementById("bc_remaining_" + id).innerText = remaining.toFixed(2);
+
+    bc_updateProgress(id);
+    document.getElementById("bc_bet_" + id).value = "";
+  }
+
+  function bc_updateProgress(id) {
+    const required = parseFloat(document.getElementById("bc_required_" + id).innerText);
+    const wagered = parseFloat(document.getElementById("bc_wagered_" + id).innerText);
+    const percent = required > 0 ? Math.min((wagered / required) * 100, 100) : 0;
+
+    document.getElementById("bc_progress_" + id).style.width = percent + "%";
+    document.getElementById("bc_progressLabel_" + id).innerText = percent.toFixed(1) + "% complete";
+  }
+
+  function bc_removePlayer(id) {
+    const el = document.getElementById("bc_player_" + id);
+    if (el) el.remove();
+  }
+
+  /* ===========================
+     Init
+     =========================== */
+  updateBalanceUI();
+  updateSportsOdds();
+  renderOpenBets();
+  renderHistory();
+  renderDeposits();
+
+  // Small QoL: update preview as user types stake
+  document.getElementById('sportStake').addEventListener('input', updateSportsOdds);
+</script>
+</body>
+</html>
